@@ -51,7 +51,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         newPostInService(titlePostTxt.text!,
                          textPostTxt.text!,
                          isReadyToPublish,
-                         nil)
+                         UIImageJPEGRepresentation(imagePost.image!, 0.5))
     }
     /*
     // MARK: - Navigation
@@ -123,18 +123,68 @@ extension NewPostController {
         client = MSClient(applicationURLString: azureAppserviceEndpoint)
     }
     
-    func newPostInService(_ title: String, _ description: String, _ status: Bool, _ imgData: Data!) {
+    func uploadDataPost(data: Data, completionHandler: @escaping ((_: String?) ->Void)) {
+        // credenciales
+        let credential = AZSStorageCredentials(accountName: "juanboot4", accountKey: "4GrSb/HgrXwXBxWhpe8SzZkqdyDpUERY4kzZfE93Ud1Kea168R6GVyOOK0tIH9CvjnSkcgJp4wRkMRUpjBhilQ==")
+        do {
+            let acount = try AZSCloudStorageAccount(credentials: credential, useHttps: true)
+            let blobClient = acount.getBlobClient()
+            
+            let container = blobClient?.containerReference(fromName: "fotos")
+            
+            let blobBlock = container?.blockBlobReference(fromName: String("\(UUID().uuidString).jpg"))
+            blobBlock?.upload(from: data, completionHandler: { (error) in
+                if error == nil {
+                    completionHandler(blobBlock?.blobName)
+                } else {
+                    completionHandler(nil)
+                }
+            })
+            
+            
+        } catch {
+            
+        }
+    }
+    
+    func newPostInService(_ title: String, _ description: String, _ status: Bool, _ imgData: Data! = nil) {
         let posts = client.table(withName: tableName)
         
-        posts.insert(["title": title, "postDescription" : description, "status" : status]) { (result, error) in
+        posts.insert(["title": title, "postDescription" : description, "status" : status]) {
+            (result, error) in
             if let _ = error {
                 print("\(error)")
                 return
             }
+            if let _ = imgData {
+                self.uploadDataPost(data: imgData, completionHandler: { (blobname) in
+                    
+                    let item = ["id" : (result?["id"] as! String), "photo" : blobname]
+                    posts.update(item, completion: { (result, error) in
+                        if let _ = error {
+                            print("Error ---> \(error?.localizedDescription)")
+                        }
+                        print("\(result)")
+                    })
+                })
+            }
+            
+            
         }
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
