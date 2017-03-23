@@ -65,7 +65,7 @@ class MainTimeLine: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "ShowRatingPost" {
-            let vc = segue.destination as! PostReview
+//            let vc = segue.destination as! PostReview
             // aqui pasamos el item selecionado
         }
     }
