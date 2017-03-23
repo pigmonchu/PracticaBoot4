@@ -14,6 +14,9 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var textPostTxt: UITextField!
     @IBOutlet weak var imagePost: UIImageView!
     
+    let tableName = "Posts"
+    let azureAppserviceEndpoint = "https://boot4camplab.azurewebsites.net"
+    
     var isReadyToPublish: Bool = false
     var imageCaptured: UIImage! {
         didSet {
@@ -21,9 +24,13 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
         }
     }
     
+    var client: MSClient!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupAzureAppService()
         // Do any additional setup after loading the view.
     }
 
@@ -41,6 +48,10 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     @IBAction func savePostInCloud(_ sender: Any) {
         // preparado para implementar codigo que persita en el cloud 
+        newPostInService(titlePostTxt.text!,
+                         textPostTxt.text!,
+                         isReadyToPublish,
+                         nil)
     }
     /*
     // MARK: - Navigation
@@ -105,6 +116,25 @@ extension NewPostController {
     
 }
 
+// MARK: - Metodos para Appservice
+extension NewPostController {
+    
+    func setupAzureAppService() {
+        client = MSClient(applicationURLString: azureAppserviceEndpoint)
+    }
+    
+    func newPostInService(_ title: String, _ description: String, _ status: Bool, _ imgData: Data!) {
+        let posts = client.table(withName: tableName)
+        
+        posts.insert(["title": title, "postDescription" : description, "status" : status]) { (result, error) in
+            if let _ = error {
+                print("\(error)")
+                return
+            }
+        }
+    }
+    
+}
 
 
 
