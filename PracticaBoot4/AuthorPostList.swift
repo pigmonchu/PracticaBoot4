@@ -29,17 +29,17 @@ class AuthorPostList: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        client.login(withProvider: "Facebook", controller: self, animated: true) { (
-            user, error) in
-            if let _ = error {
-                print("\(error?.localizedDescription)")
-                return
-            } else {
-                
-                print("\(user?.userId)")
-            }
-            
-        }
+//        client.login(withProvider: "Facebook", controller: self, animated: true) { (
+//            user, error) in
+//            if let _ = error {
+//                print("\(error?.localizedDescription)")
+//                return
+//            } else {
+//                
+//                print("\(user?.userId)")
+//            }
+//            
+//        }
         
 //        client.login(withProvider: "Facebook", urlScheme: "", controller: self, animated: true) { (user, error) in
 //            if let _ = error {
