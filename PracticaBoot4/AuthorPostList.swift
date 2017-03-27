@@ -12,7 +12,8 @@ class AuthorPostList: UITableViewController {
 
     let cellIdentifier = "POSTAUTOR"
     
-    var model = ["test1", "test2"]
+    var model: [Any] = []
+    let client = MSClient(applicationURLString: "https://boot4camplab.azurewebsites.net")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,32 @@ class AuthorPostList: UITableViewController {
         
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        client.login(withProvider: "Facebook", controller: self, animated: true) { (
+            user, error) in
+            if let _ = error {
+                print("\(error?.localizedDescription)")
+                return
+            } else {
+                
+                print("\(user?.userId)")
+            }
+            
+        }
+        
+//        client.login(withProvider: "Facebook", urlScheme: "", controller: self, animated: true) { (user, error) in
+//            if let _ = error {
+//                print("\(error?.localizedDescription)")
+//                return
+//            } else {
+////                guard user { return }
+//                
+//                print("\(user?.userId)")
+//            }
+//        }
+    }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
         refreshControl.endRefreshing()
@@ -35,6 +62,32 @@ class AuthorPostList: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: Popular el model desde Azure
+    
+    func pullModell()  {
+        
+        
+        client.invokeAPI("GetAllMyPosts",
+                         body: nil,
+                         httpMethod: "GET",
+                         parameters: nil,
+                         headers: nil) {
+                            (result, response, error) in
+                            if let _ = error {
+                                print("\(error?.localizedDescription)")
+                            }
+                            print("\(result)")
+                            self.model = result as! [Any]
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+        }
+        
+    }
+
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -42,13 +95,20 @@ class AuthorPostList: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if model.isEmpty {
+            return 0
+        }
         return model.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        cell.textLabel?.text = model[indexPath.row]
+        
+        let item = model[indexPath.row] as! Dictionary<String, Any>
+        
+        cell.textLabel?.text = item["title"] as? String
     
         return cell
     }
@@ -57,6 +117,25 @@ class AuthorPostList: UITableViewController {
         
         let publish = UITableViewRowAction(style: .normal, title: "Publicar") { (action, indexPath) in
             // Codigo para publicar el post
+            let item = self.model[indexPath.row] as? Dictionary<String, Any>
+            
+            let paramsToCloud = ["id": item?["id"] as! String, "estado" : true] as [String : Any]
+            
+            self.client.invokeAPI("publishPosts",
+                             body: nil,
+                             httpMethod: "PUT",
+                             parameters: paramsToCloud,
+                             headers: nil) {
+                                (result, response, error) in
+                                if let _ = error {
+                                    print("\(error?.localizedDescription)")
+                                    return
+                                }
+                                self.pullModell()
+            
+            }
+
+            
         }
         publish.backgroundColor = UIColor.green
         let deleteRow = UITableViewRowAction(style: .destructive, title: "Eliminar") { (action, indexPath) in

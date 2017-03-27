@@ -56,7 +56,7 @@ class MainTimeLine: UITableViewController {
 
         let item = model[indexPath.row] as! Dictionary<String, Any>
         
-        cell.textLabel?.text = item["title"] as! String
+        cell.textLabel?.text = item["title"] as? String
 
         return cell
     }
