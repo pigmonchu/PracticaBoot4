@@ -10,7 +10,7 @@ import UIKit
 
 class MainTimeLine: UITableViewController {
 
-    var model = ["post1", "post2"]
+    var model: [Any] = []
     let cellIdentier = "POSTSCELL"
     
     override func viewDidLoad() {
@@ -22,6 +22,10 @@ class MainTimeLine: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pullModell()
     }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
@@ -40,7 +44,9 @@ class MainTimeLine: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        if model.isEmpty {
+            return 0
+        }
         return model.count
     }
 
@@ -48,7 +54,9 @@ class MainTimeLine: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentier, for: indexPath)
 
-        cell.textLabel?.text = model[indexPath.row]
+        let item = model[indexPath.row] as! Dictionary<String, Any>
+        
+        cell.textLabel?.text = item["title"] as! String
 
         return cell
     }
@@ -56,7 +64,29 @@ class MainTimeLine: UITableViewController {
         
         performSegue(withIdentifier: "ShowRatingPost", sender: indexPath)
     }
+// MARK: - Rellenar model
+    
+    func pullModell()  {
+        let client = MSClient(applicationURLString: "https://boot4camplab.azurewebsites.net")
+        
+        client.invokeAPI("GetAllPublishPosts",
+                         body: nil,
+                         httpMethod: "GET",
+                         parameters: nil,
+                         headers: nil) {
+                            (result, response, error) in
+                            if let _ = error {
+                                print("\(error?.localizedDescription)")
+                            }
+                            print("\(result)")
+                            self.model = result as! [Any]
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+        }
 
+    }
 
     // MARK: - Navigation
 

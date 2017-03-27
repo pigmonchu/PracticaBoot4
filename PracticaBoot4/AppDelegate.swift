@@ -17,7 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        
+//        let client = MSClient(applicationURLString: "https://boot4camplab.azurewebsites.net")
+//        
+//        client.invokeAPI("GetAllPublishPosts",
+//                         body: nil,
+//                         httpMethod: "GET",
+//                         parameters: nil,
+//                         headers: nil) {
+//                            (result, response, error) in
+//                            if let _ = error {
+//                                print("\(error?.localizedDescription)")
+//                            }
+//                            print("\(result)")
+//            
+//        }
         return true
     }
 
