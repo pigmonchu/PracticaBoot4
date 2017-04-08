@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main Time Line-->
+        <!--All Public PostsVC-->
         <scene sceneID="DSd-M8-OhI">
             <objects>
-                <tableViewController id="93k-iG-gRG" customClass="MainTimeLine" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="93k-iG-gRG" customClass="AllPublicPostsVC" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="LpH-cm-hVQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
         <!--Title-->
         <scene sceneID="8Bj-Bn-m5H">
             <objects>
-                <tableViewController id="fz7-Mj-aJx" customClass="AuthorPostList" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="fz7-Mj-aJx" customClass="AllMyPostsVC" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0lP-ts-4C1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -97,7 +97,7 @@
         <!--Title-->
         <scene sceneID="IjY-QI-dXU">
             <objects>
-                <viewController id="Itr-Rl-A1y" customClass="NewPostController" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Itr-Rl-A1y" customClass="NewPostVC" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cTT-H6-D0y"/>
                         <viewControllerLayoutGuide type="bottom" id="Fmi-pa-Jco"/>

@@ -19,7 +19,7 @@ class Post:NSObject {
     var body: String
     var attachment: URL?
     var author: String
-    var isDraft: Bool
+    var isPublic: Bool
     var rating: Double
     var numOfReadings: Int
     var lat: Double?
@@ -31,7 +31,7 @@ class Post:NSObject {
          author         : String,
          lat            : Double?,
          lng            : Double?,
-         isDraft        : Bool?,
+         isPublic        : Bool?,
          rating         : Double?,
          numOfReadings  : Int?,
          attachment     : URL?
@@ -42,16 +42,16 @@ class Post:NSObject {
         self.author = author
         self.lat = lat
         self.lng = lng
-        if isDraft == nil {
-            self.isDraft = false
+        if isPublic == nil {
+            self.isPublic = false
         } else {
-            self.isDraft = isDraft!
+            self.isPublic = isPublic!
         }
         
-        if isDraft == nil {
-            self.isDraft = false
+        if isPublic == nil {
+            self.isPublic = false
         } else {
-            self.isDraft = isDraft!
+            self.isPublic = isPublic!
         }
         
         if rating == nil {
@@ -106,8 +106,8 @@ class Post:NSObject {
             self.lng = jsonObject["lng"] as! Double
         }
         
-        if jsonObject["is_draft"] != nil {
-            self.isDraft = jsonObject["is_draft"] as! Bool
+        if jsonObject["is_public"] != nil {
+            self.isPublic = jsonObject["is_public"] as! Bool
         }
         
         if jsonObject["rating"] != nil {
@@ -126,7 +126,7 @@ class Post:NSObject {
     }
     
     convenience override init() {
-        self.init(title: "", body: "", author: "", lat: nil, lng: nil, isDraft: nil, rating: nil, numOfReadings: nil, attachment: nil)
+        self.init(title: "", body: "", author: "", lat: nil, lng: nil, isPublic: nil, rating: nil, numOfReadings: nil, attachment: nil)
     }
     
     // MARK: - Getters
@@ -152,19 +152,29 @@ class Post:NSObject {
 }
 
 class PostsIndex {
-    var cards: [String: Post]
+    private var _cards: [String: Post]
     
     init() {
-        cards = [:]
+        _cards = [:]
     }
     
     func append(key: String, value: Post) {
-        cards[key] = value
+        _cards[key] = value
     }
     
     var count: Int {
         get {
-            return cards.count
+            return _cards.count
+        }
+    }
+    
+    var cards: [Post] {
+        get {
+            var cards:[Post] = []
+            for (_, value) in _cards {
+                cards.append(value)
+            }
+            return cards
         }
     }
 }

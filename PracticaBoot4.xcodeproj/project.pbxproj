@@ -16,10 +16,10 @@
 		5D931CED1E83EEEA005051E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEC1E83EEEA005051E9 /* Assets.xcassets */; };
 		5D931CF01E83EEEA005051E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEE1E83EEEA005051E9 /* LaunchScreen.storyboard */; };
 		5D931CFD1E83F110005051E9 /* TimeLine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CFC1E83F110005051E9 /* TimeLine.storyboard */; };
-		5D931D011E83F5D1005051E9 /* MainTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D001E83F5D1005051E9 /* MainTimeLine.swift */; };
+		5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */; };
 		5D931D031E83F67C005051E9 /* PostReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D021E83F67C005051E9 /* PostReview.swift */; };
-		5D931D051E83F773005051E9 /* AuthorPostList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D041E83F773005051E9 /* AuthorPostList.swift */; };
-		5D931D071E83F7BA005051E9 /* NewPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D061E83F7BA005051E9 /* NewPostController.swift */; };
+		5D931D051E83F773005051E9 /* AllMyPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D041E83F773005051E9 /* AllMyPostsVC.swift */; };
+		5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D061E83F7BA005051E9 /* NewPostVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,10 +35,10 @@
 		5D931CEF1E83EEEA005051E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D931CF11E83EEEA005051E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D931CFC1E83F110005051E9 /* TimeLine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TimeLine.storyboard; sourceTree = "<group>"; };
-		5D931D001E83F5D1005051E9 /* MainTimeLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTimeLine.swift; sourceTree = "<group>"; };
+		5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPublicPostsVC.swift; sourceTree = "<group>"; };
 		5D931D021E83F67C005051E9 /* PostReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostReview.swift; sourceTree = "<group>"; };
-		5D931D041E83F773005051E9 /* AuthorPostList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPostList.swift; sourceTree = "<group>"; };
-		5D931D061E83F7BA005051E9 /* NewPostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostController.swift; sourceTree = "<group>"; };
+		5D931D041E83F773005051E9 /* AllMyPostsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMyPostsVC.swift; sourceTree = "<group>"; };
+		5D931D061E83F7BA005051E9 /* NewPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PracticaBoot4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				46211AB61E98F0F600C335D6 /* MainNavigationController.swift */,
-				5D931D001E83F5D1005051E9 /* MainTimeLine.swift */,
+				5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */,
 				5D931D081E8414BB005051E9 /* All users */,
 				5D931D091E8414CA005051E9 /* Auth Users */,
 			);
@@ -150,8 +150,8 @@
 		5D931D091E8414CA005051E9 /* Auth Users */ = {
 			isa = PBXGroup;
 			children = (
-				5D931D041E83F773005051E9 /* AuthorPostList.swift */,
-				5D931D061E83F7BA005051E9 /* NewPostController.swift */,
+				5D931D041E83F773005051E9 /* AllMyPostsVC.swift */,
+				5D931D061E83F7BA005051E9 /* NewPostVC.swift */,
 			);
 			name = "Auth Users";
 			sourceTree = "<group>";
@@ -298,14 +298,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D931D051E83F773005051E9 /* AuthorPostList.swift in Sources */,
+				5D931D051E83F773005051E9 /* AllMyPostsVC.swift in Sources */,
 				5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */,
 				46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */,
 				5D931D031E83F67C005051E9 /* PostReview.swift in Sources */,
 				46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */,
-				5D931D071E83F7BA005051E9 /* NewPostController.swift in Sources */,
+				5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */,
 				46211AB51E98CFDD00C335D6 /* Post.swift in Sources */,
-				5D931D011E83F5D1005051E9 /* MainTimeLine.swift in Sources */,
+				5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

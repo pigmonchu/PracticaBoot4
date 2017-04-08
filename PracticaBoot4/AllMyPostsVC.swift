@@ -1,6 +1,6 @@
 import UIKit
 
-class AuthorPostList: UITableViewController {
+class AllMyPostsVC: UITableViewController {
     var cloudManager: CloudManager? = nil
 
     let cellIdentifier = "POSTAUTOR"

@@ -53,8 +53,8 @@ class CloudManager {
 // MARK: - autoinyección. Me parece una porquería pero no quiero escribir. Tendré que pensar algo mejor en su momento
     func injectMe(inViewController VC: UIViewController) {
         (VC as? PostReview)?.cloudManager = self
-        (VC as? NewPostController)?.cloudManager = self
-        (VC as? AuthorPostList)?.cloudManager = self
+        (VC as? NewPostVC)?.cloudManager = self
+        (VC as? AllMyPostsVC)?.cloudManager = self
     }
     
     

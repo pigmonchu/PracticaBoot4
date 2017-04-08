@@ -2,7 +2,8 @@ import UIKit
 
 class PostReview: UIViewController {
     var cloudManager: CloudManager? = nil
-
+    var model: Post?
+    
     @IBOutlet weak var rateSlider: UISlider!
     @IBOutlet weak var imagePost: UIImageView!
     @IBOutlet weak var postTxt: UITextField!
@@ -10,6 +11,10 @@ class PostReview: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        postTxt.isUserInteractionEnabled = false
+        titleTxt.isUserInteractionEnabled = false
+        
+        showData()
 
     }
 
@@ -23,5 +28,10 @@ class PostReview: UIViewController {
 
     @IBAction func ratePost(_ sender: Any) {
     }
-
+    
+    func showData() {
+        titleTxt.text = model?.title
+        postTxt.text = model?.body
+        
+    }
 }
