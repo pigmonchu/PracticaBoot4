@@ -1,7 +1,7 @@
 import UIKit
 
 class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    var cloudManager: CloudManager? = nil
+    var cloudManager: CloudManager?
 
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
@@ -33,7 +33,37 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     @IBAction func savePostInCloud(_ sender: Any) {
         
+        if titlePostTxt.text == "" || textPostTxt.text == "" {
+            let alertController = UIAlertController(title: "Aviso",
+                                                        message: "Debe informar Título y Descripción",
+                                                        preferredStyle: UIAlertControllerStyle.alert
+            )
+            
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+                (result : UIAlertAction) -> Void in
+                print("OK")
+            }
+            
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            
+            return
+        }
         
+        let post = Post(title: titlePostTxt.text!,
+                        body: textPostTxt.text!,
+                        author: "1",
+                        lat: nil,
+                        lng: nil,
+                        isDraft: !isReadyToPublish,
+                        rating: nil,
+                        numOfReadings: nil,
+                        attachment: URL(string: "https://static.pexels.com/photos/92902/pexels-photo-92902.jpeg")
+        )
+        
+        cloudManager?.createPostInCloud(post)
+        
+        navigationController?.popViewController(animated: true)
 
     }
 
@@ -41,7 +71,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     internal func pushAlertCameraLibrary() -> UIAlertController {
         let actionSheet = UIAlertController(title: NSLocalizedString("Selecciona la fuente de la imagen", comment: ""), message: NSLocalizedString("", comment: ""), preferredStyle: .actionSheet)
         
-        let libraryBtn = UIAlertAction(title: NSLocalizedString("Ussar la libreria", comment: ""), style: .default) { (action) in
+        let libraryBtn = UIAlertAction(title: NSLocalizedString("Usar la libreria", comment: ""), style: .default) { (action) in
             self.takePictureFromCameraOrLibrary(.photoLibrary)
             
         }

@@ -51,6 +51,8 @@ class MainTimeLine: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        cloudManager?.injectMe(inViewController: segue.destination)
+        
         // aqui pasamos el item selecionado
         if segue.identifier == "ShowRatingPost" {
             let vc = segue.destination as! PostReview

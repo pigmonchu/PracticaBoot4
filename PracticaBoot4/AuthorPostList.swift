@@ -50,4 +50,13 @@ class AuthorPostList: UITableViewController {
         }
         return [publish, deleteRow]
     }
+
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let VC = segue.destination
+        cloudManager?.injectMe(inViewController: VC)
+
+    }
 }

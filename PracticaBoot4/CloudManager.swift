@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Firebase
 import FirebaseDatabase
  
@@ -48,4 +49,13 @@ class CloudManager {
         let recordWithKey = ["\(key)" : document]
         inEntity.updateChildValues(recordWithKey)
     }
+    
+// MARK: - autoinyección. Me parece una porquería pero no quiero escribir. Tendré que pensar algo mejor en su momento
+    func injectMe(inViewController VC: UIViewController) {
+        (VC as? PostReview)?.cloudManager = self
+        (VC as? NewPostController)?.cloudManager = self
+        (VC as? AuthorPostList)?.cloudManager = self
+    }
+    
+    
 }
