@@ -1,10 +1,3 @@
-//
-//  MainTimeLine.swift
-//  PracticaBoot4
-//
-//  Created by Juan Antonio Martin Noguera on 23/03/2017.
-//  Copyright © 2017 COM. All rights reserved.
-//
 
 import UIKit
 
@@ -16,11 +9,6 @@ class MainTimeLine: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
     }
     
@@ -60,13 +48,11 @@ class MainTimeLine: UITableViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
+        // aqui pasamos el item selecionado
         if segue.identifier == "ShowRatingPost" {
             let vc = segue.destination as! PostReview
-            // aqui pasamos el item selecionado
         }
     }
 

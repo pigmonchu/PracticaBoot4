@@ -1,10 +1,3 @@
-//
-//  NewPostController.swift
-//  PracticaBoot4
-//
-//  Created by Juan Antonio Martin Noguera on 23/03/2017.
-//  Copyright © 2017 COM. All rights reserved.
-//
 
 import UIKit
 
@@ -15,6 +8,7 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBOutlet weak var imagePost: UIImageView!
     
     var isReadyToPublish: Bool = false
+
     var imageCaptured: UIImage! {
         didSet {
             imagePost.image = imageCaptured
@@ -24,12 +18,10 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func takePhoto(_ sender: Any) {
@@ -40,17 +32,8 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     @IBAction func savePostInCloud(_ sender: Any) {
-        // preparado para implementar codigo que persita en el cloud 
-    }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
 
     // MARK: - funciones para la camara
     internal func pushAlertCameraLibrary() -> UIAlertController {
