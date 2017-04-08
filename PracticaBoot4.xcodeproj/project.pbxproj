@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		46211AAC1E98C64600C335D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46211AAB1E98C64600C335D6 /* GoogleService-Info.plist */; };
+		46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB11E98CDD000C335D6 /* CloudManager.swift */; };
+		46211AB51E98CFDD00C335D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB41E98CFDD00C335D6 /* Post.swift */; };
+		46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB61E98F0F600C335D6 /* MainNavigationController.swift */; };
 		52B25EC8A0AF7F19B73B952F /* Pods_PracticaBoot4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */; };
 		5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931CE51E83EEEA005051E9 /* AppDelegate.swift */; };
 		5D931CED1E83EEEA005051E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEC1E83EEEA005051E9 /* Assets.xcassets */; };
@@ -23,6 +26,9 @@
 		014B21DAB08AD61B8BA5AD30 /* Pods-PracticaBoot4.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PracticaBoot4.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4.debug.xcconfig"; sourceTree = "<group>"; };
 		3AC967126678D88F1C224AB9 /* Pods-PracticaBoot4.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PracticaBoot4.release.xcconfig"; path = "Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4.release.xcconfig"; sourceTree = "<group>"; };
 		46211AAB1E98C64600C335D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46211AB11E98CDD000C335D6 /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		46211AB41E98CFDD00C335D6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		46211AB61E98F0F600C335D6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		5D931CE21E83EEEA005051E9 /* PracticaBoot4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PracticaBoot4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D931CE51E83EEEA005051E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D931CEC1E83EEEA005051E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,6 +54,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46211AB01E98CDBE00C335D6 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				46211AB11E98CDD000C335D6 /* CloudManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		46211AB31E98CFA900C335D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				46211AB41E98CFDD00C335D6 /* Post.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		5D931CD91E83EEEA005051E9 = {
 			isa = PBXGroup;
 			children = (
@@ -69,8 +91,10 @@
 		5D931CE41E83EEEA005051E9 /* PracticaBoot4 */ = {
 			isa = PBXGroup;
 			children = (
+				46211AB01E98CDBE00C335D6 /* Managers */,
 				5D931CF71E83F069005051E9 /* AppDelegate */,
 				5D931CF81E83F076005051E9 /* ViewControllers */,
+				46211AB31E98CFA900C335D6 /* Models */,
 				5D931CF91E83F087005051E9 /* Storyboards */,
 				5D931CFB1E83F0A8005051E9 /* Resources */,
 			);
@@ -88,6 +112,7 @@
 		5D931CF81E83F076005051E9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				46211AB61E98F0F600C335D6 /* MainNavigationController.swift */,
 				5D931D001E83F5D1005051E9 /* MainTimeLine.swift */,
 				5D931D081E8414BB005051E9 /* All users */,
 				5D931D091E8414CA005051E9 /* Auth Users */,
@@ -275,8 +300,11 @@
 			files = (
 				5D931D051E83F773005051E9 /* AuthorPostList.swift in Sources */,
 				5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */,
+				46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */,
 				5D931D031E83F67C005051E9 /* PostReview.swift in Sources */,
+				46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */,
 				5D931D071E83F7BA005051E9 /* NewPostController.swift in Sources */,
+				46211AB51E98CFDD00C335D6 /* Post.swift in Sources */,
 				5D931D011E83F5D1005051E9 /* MainTimeLine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,7 @@
-
 import UIKit
 
 class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    var cloudManager: CloudManager? = nil
 
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
@@ -32,6 +32,8 @@ class NewPostController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     @IBAction func savePostInCloud(_ sender: Any) {
+        
+        
 
     }
 

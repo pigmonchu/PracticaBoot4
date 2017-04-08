@@ -2,7 +2,8 @@
 import UIKit
 
 class MainTimeLine: UITableViewController {
-
+    var cloudManager: CloudManager? = nil
+    
     var model = ["post1", "post2"]
     let cellIdentier = "POSTSCELL"
     

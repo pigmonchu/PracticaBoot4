@@ -1,6 +1,7 @@
 import UIKit
 
 class PostReview: UIViewController {
+    var cloudManager: CloudManager? = nil
 
     @IBOutlet weak var rateSlider: UISlider!
     @IBOutlet weak var imagePost: UIImageView!

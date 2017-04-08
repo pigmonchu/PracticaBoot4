@@ -66,7 +66,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z60-VJ-e0s" id="Yux-IA-dDy">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -199,10 +199,10 @@
             </objects>
             <point key="canvasLocation" x="2797.5999999999999" y="191.1544227886057"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Scoop-->
         <scene sceneID="7qH-wA-Thm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="WTr-km-IDr" sceneMemberID="viewController">
+                <navigationController title="Scoop" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="WTr-km-IDr" customClass="MainNavigationController" customModule="PracticaBoot4" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nbx-h7-oyT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

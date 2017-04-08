@@ -7,5 +7,6 @@ target 'PracticaBoot4' do
 
   # Pods for PracticaBoot4
   pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
 end
