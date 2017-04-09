@@ -72,33 +72,11 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         }
         
         if messages.count > 0 {
-            pushAlertErrorPost(messages)
+            present(pushAlertMessages(messages), animated: true, completion: nil)
             return false
         }
         
         return true
-    }
-    
-    internal func pushAlertErrorPost(_ messages: [String]) {
-        
-        var infoMessage = ""
-        
-        for message in messages {
-            infoMessage += (message + "\n")
-        }
-        
-        let alertController = UIAlertController(title: "Aviso",
-                                                message: infoMessage,
-                                                preferredStyle: UIAlertControllerStyle.alert
-        )
-        
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-            (result : UIAlertAction) -> Void in
-            print("OK")
-        }
-        
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
     }
     
     

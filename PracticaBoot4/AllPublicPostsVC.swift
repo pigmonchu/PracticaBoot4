@@ -13,6 +13,12 @@ class AllPublicPostsVC: UITableViewController {
         cloudManager?.readAllPosts(callBack: { (postsIndex) in
             self.model = postsIndex
             self.tableView.reloadData()
+            if (!self.validateInput()) {
+                self.present(pushAlertMessages(["No se muestran todos los post, algunos contienen errores"]),
+                             animated: true,
+                             completion: nil)
+            }
+            
         })
 
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
@@ -43,6 +49,14 @@ class AllPublicPostsVC: UITableViewController {
         performSegue(withIdentifier: "ShowRatingPost", sender: indexPath)
     }
 
+    func validateInput() -> Bool {
+        for post in model.cards {
+            if post.withErrors {
+                return false
+            }
+        }
+        return true
+    }
 
     
     
@@ -59,5 +73,5 @@ class AllPublicPostsVC: UITableViewController {
         }
     }
 
-
 }
+

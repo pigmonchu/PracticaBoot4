@@ -11,6 +11,8 @@
 		46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB11E98CDD000C335D6 /* CloudManager.swift */; };
 		46211AB51E98CFDD00C335D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB41E98CFDD00C335D6 /* Post.swift */; };
 		46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB61E98F0F600C335D6 /* MainNavigationController.swift */; };
+		46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FA91E99D9AA00D25FA5 /* Errors.swift */; };
+		46F34FAC1E99E7D800D25FA5 /* AlertsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */; };
 		52B25EC8A0AF7F19B73B952F /* Pods_PracticaBoot4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */; };
 		5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931CE51E83EEEA005051E9 /* AppDelegate.swift */; };
 		5D931CED1E83EEEA005051E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEC1E83EEEA005051E9 /* Assets.xcassets */; };
@@ -29,6 +31,8 @@
 		46211AB11E98CDD000C335D6 /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		46211AB41E98CFDD00C335D6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		46211AB61E98F0F600C335D6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		46F34FA91E99D9AA00D25FA5 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsManager.swift; sourceTree = "<group>"; };
 		5D931CE21E83EEEA005051E9 /* PracticaBoot4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PracticaBoot4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D931CE51E83EEEA005051E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D931CEC1E83EEEA005051E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				46211AB11E98CDD000C335D6 /* CloudManager.swift */,
+				46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -66,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				46211AB41E98CFDD00C335D6 /* Post.swift */,
+				46F34FA91E99D9AA00D25FA5 /* Errors.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -302,9 +308,11 @@
 				5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */,
 				46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */,
 				5D931D031E83F67C005051E9 /* PostReview.swift in Sources */,
+				46F34FAC1E99E7D800D25FA5 /* AlertsManager.swift in Sources */,
 				46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */,
 				5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */,
 				46211AB51E98CFDD00C335D6 /* Post.swift in Sources */,
+				46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */,
 				5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

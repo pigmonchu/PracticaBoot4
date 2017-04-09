@@ -25,6 +25,8 @@ class Post:NSObject {
     var lat: Double?
     var lng: Double?
     
+    var withErrors:Bool
+    
     //MARK: - Initialization
     init(title          : String,
          body           : String,
@@ -68,6 +70,7 @@ class Post:NSObject {
         
         self.attachment = attachment
         self.idInCloud = nil
+        self.withErrors = false
     }
     
     convenience init(snap: FIRDataSnapshot?) {
@@ -86,47 +89,63 @@ class Post:NSObject {
     convenience init(dict jsonObject: CloudManager.Document) {
         self.init()
         
-        if jsonObject["title"] != nil {
-            self.title = jsonObject["title"] as! String
-        }
+        withErrors = withErrors || !validateMandatory(jsonObject["title"], result: &title)
+        withErrors = withErrors || !validateMandatory(jsonObject["body"], result: &body)
+        withErrors = withErrors || !validateMandatory(jsonObject["author"], result: &author)
+        withErrors = withErrors || !validateType(jsonObject["lat"], result: &lat)
+        withErrors = withErrors || !validateType(jsonObject["lng"], result: &lng)
+        withErrors = withErrors || !validateType(jsonObject["is_public"], result: &isPublic)
+        withErrors = withErrors || !validateType(jsonObject["rating"] , result: &rating)
+        withErrors = withErrors || !validateType(jsonObject["num_of_readings"], result: &numOfReadings)
         
-        if jsonObject["body"] != nil {
-            self.body = jsonObject["body"] as! String
-        }
-        
-        if jsonObject["author"] != nil {
-            self.author = jsonObject["author"] as! String
-        }
-        
-        if jsonObject["lat"] != nil {
-            self.lat = jsonObject["lat"] as! Double
-        }
-        
-        if jsonObject["lng"] != nil {
-            self.lng = jsonObject["lng"] as! Double
-        }
-        
-        if jsonObject["is_public"] != nil {
-            self.isPublic = jsonObject["is_public"] as! Bool
-        }
-        
-        if jsonObject["rating"] != nil {
-            self.rating = jsonObject["rating"] as! Double
-        }
-        
-        if jsonObject["num_of_readings"] != nil {
-            self.numOfReadings = jsonObject["num_of_readings"] as! Int
-        }
-        
-        if jsonObject["attachment"] != nil {
-            let attachmentString = jsonObject["attachment"] as! String
-            self.attachment = URL(string: attachmentString)
-        }
+        withErrors = withErrors || !validateType(getURL(from: jsonObject["attachment"]) , result: &attachment)
         
     }
     
     convenience override init() {
         self.init(title: "", body: "", author: "", lat: nil, lng: nil, isPublic: nil, rating: nil, numOfReadings: nil, attachment: nil)
+    }
+    
+    // MARK: - Validators
+    private func getURL(from item: Any?) -> Any? {
+        guard let stringItem = item as? String else {
+            print("\(String(describing: item)) no es del tipo String")
+            return nil
+        }
+        
+        return URL(string: stringItem) as Any?
+    }
+    
+    private func validateType<T>(_ item: Any?, result: inout T) -> Bool {
+        if item == nil {
+            return true
+        }
+        
+        do {
+            guard let value = item as? T else {
+                print("\(String(describing: item)) no es del tipo \(T.self)")
+                throw PracticaBoot4Errors.invalidFormatField
+            }
+            
+            result = value
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    private func validateMandatory<T>(_ item: Any?, result: inout T) -> Bool {
+        
+        do {
+            guard item != nil else {
+                print("Campo obligatorio no informado")
+                throw PracticaBoot4Errors.mandatoryFieldWithoutInstanceAssociated
+            }
+            
+            return validateType(item, result: &result)
+        } catch {
+            return false
+        }
     }
     
     // MARK: - Getters
