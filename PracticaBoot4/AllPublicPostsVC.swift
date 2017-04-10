@@ -38,9 +38,13 @@ class AllPublicPostsVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentier, for: indexPath)
 
-        cell.textLabel?.text = model.cards[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentier, for: indexPath)
+        let selectedPost = model.cards[indexPath.row]
+        
+        let fechaPub = dateToLocale(selectedPost.publishDate)
+        
+        cell.textLabel?.text = selectedPost.title + "(\(fechaPub))"
 
         return cell
     }

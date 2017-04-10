@@ -24,6 +24,9 @@ class Post:NSObject {
     var numOfReadings: Int
     var lat: Double?
     var lng: Double?
+    var publishDate: Date?
+    var createDate: Date
+    var modDate: Date
     
     var withErrors:Bool
     
@@ -55,6 +58,8 @@ class Post:NSObject {
         } else {
             self.isPublic = isPublic!
         }
+
+        
         
         if rating == nil {
             self.rating = 0
@@ -68,9 +73,22 @@ class Post:NSObject {
             self.numOfReadings = numOfReadings!
         }
         
+        self.publishDate = nil
+        
         self.attachment = attachment
+    
+        let now = Date()
+        if self.isPublic {
+            self.publishDate = now
+        } else {
+            self.publishDate = nil
+        }
+        self.createDate = now
+        self.modDate = now
         self.idInCloud = nil
         self.withErrors = false
+
+    
     }
     
     convenience init(snap: FIRDataSnapshot?) {
@@ -94,12 +112,15 @@ class Post:NSObject {
         withErrors = withErrors || !validateMandatory(jsonObject["author"], result: &author)
         withErrors = withErrors || !validateType(jsonObject["lat"], result: &lat)
         withErrors = withErrors || !validateType(jsonObject["lng"], result: &lng)
-        withErrors = withErrors || !validateType(jsonObject["is_public"], result: &isPublic)
+        withErrors = withErrors || !validateType(jsonObject["isPublic"], result: &isPublic)
+        withErrors = withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
         withErrors = withErrors || !validateType(jsonObject["rating"] , result: &rating)
-        withErrors = withErrors || !validateType(jsonObject["num_of_readings"], result: &numOfReadings)
+        withErrors = withErrors || !validateType(jsonObject["numOfReadings"], result: &numOfReadings)
         
         withErrors = withErrors || !validateType(getURL(from: jsonObject["attachment"]) , result: &attachment)
         
+        withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["createDate"]), result: &createDate)
+        withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["modDate"]), result: &modDate)
     }
     
     convenience override init() {
@@ -108,12 +129,19 @@ class Post:NSObject {
     
     // MARK: - Validators
     private func getURL(from item: Any?) -> Any? {
-        guard let stringItem = item as? String else {
+        guard let _ = item as? String else {
             print("\(String(describing: item)) no es del tipo String")
             return nil
         }
-        
-        return URL(string: stringItem) as Any?
+        return URL(string: item as! String) as Any?
+    }
+    
+    private func getDate(from item: Any?) -> Any? {
+        guard let _ = item as? Double else {
+            print("\(String(describing: item)) no es del tipo Double")
+            return nil
+        }
+        return Date(timeIntervalSinceReferenceDate: (item as! Double) * -1) as Any?
     }
     
     private func validateType<T>(_ item: Any?, result: inout T) -> Bool {
@@ -156,17 +184,28 @@ class Post:NSObject {
         for (_, attr) in mirrored_object.children.enumerated() {
             if let property_name = attr.label as String! {
                 
-                if property_name != "idInCloud" {
-                    if attr.value is NSURL {
-                        dict["\(property_name)"] = (attr.value as! NSURL).absoluteString
-                    } else {
-                        dict["\(property_name)"] = attr.value
-                    }
+                if property_name != "idInCloud" &&
+                   property_name != "swErrors" {
+                    dict["\(property_name)"] = format(value: attr.value)
                 }
                 
             }
         }
         return dict
+    }
+    
+    private func format(value: Any?) -> Any? {
+        var retValue: Any?
+        
+        switch value {
+        case is NSURL:
+            retValue = (value as! NSURL).absoluteString
+        case is NSDate:
+            retValue = (value as! Date).timeIntervalSinceReferenceDate * -1 //Para poder ordenar de más reciente a más antiguo en FB
+        default:
+            retValue = value
+        }
+        return retValue
     }
 }
 
