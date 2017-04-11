@@ -1,3 +1,17 @@
+/*
+  TODO: 
+    1. Hay usuario activo?
+        1.1. - NO -> Autenticar
+            1.1.1 - Autenticación correcta -> 2.
+            1.1.2 - Autenticación incorrecta -> 1.1
+        1.2. - SI -> 2
+    2.- Listar todos mis posts (públicos o no)
+    3.- Esperar Evento
+        3.1 - Clic en post -> Update
+        3.2 - swipe en post -> Delete
+        3.3 - Clic en + -> Create
+*/
+
 import UIKit
 
 class AllMyPostsVC: UITableViewController {

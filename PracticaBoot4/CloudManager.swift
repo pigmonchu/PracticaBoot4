@@ -34,8 +34,8 @@ class CloudManager {
     
     //MARK: - Manejadores
     func readAllPublicPosts(callBack: @escaping ([Post]) -> Void ) {
-        var arrPosts:[Post] = []
             PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
+                var arrPosts:[Post] = []
 
                 for item in snap.children {
                     let post = Post(snap: (item as! FIRDataSnapshot))

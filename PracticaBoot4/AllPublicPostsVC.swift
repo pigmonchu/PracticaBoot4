@@ -10,8 +10,8 @@ class AllPublicPostsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //Carga inicial de noticias
-        cloudManager?.readAllPublicPosts(callBack: { (postsIndex) in
-            self.model = postsIndex
+        cloudManager?.readAllPublicPosts(callBack: { (posts) in
+            self.model = posts
             self.tableView.reloadData()
             if (!self.validateInput()) {
                 self.present(pushAlertMessages(["No se muestran todos los post, algunos contienen errores"]),
