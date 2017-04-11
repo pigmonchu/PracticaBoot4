@@ -4,13 +4,13 @@ import UIKit
 class AllPublicPostsVC: UITableViewController {
     var cloudManager: CloudManager? = nil
     
-    var model = PostsIndex()
+    var model:[Post] = []
     let cellIdentier = "POSTSCELL"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Carga inicial de noticias
-        cloudManager?.readAllPosts(callBack: { (postsIndex) in
+        cloudManager?.readAllPublicPosts(callBack: { (postsIndex) in
             self.model = postsIndex
             self.tableView.reloadData()
             if (!self.validateInput()) {
@@ -40,7 +40,7 @@ class AllPublicPostsVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentier, for: indexPath)
-        let selectedPost = model.cards[indexPath.row]
+        let selectedPost = model[indexPath.row]
         
         let fechaPub = dateToLocale(selectedPost.publishDate)
         
@@ -54,7 +54,7 @@ class AllPublicPostsVC: UITableViewController {
     }
 
     func validateInput() -> Bool {
-        for post in model.cards {
+        for post in model {
             if post.withErrors {
                 return false
             }
@@ -73,7 +73,7 @@ class AllPublicPostsVC: UITableViewController {
         // aqui pasamos el item selecionado
         if segue.identifier == "ShowRatingPost" {
             let vc = segue.destination as! PostReview
-            vc.model = self.model.cards[(sender as! IndexPath).row]
+            vc.model = self.model[(sender as! IndexPath).row]
         }
     }
 

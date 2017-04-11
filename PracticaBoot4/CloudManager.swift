@@ -1,7 +1,20 @@
+/*
+ Razón por la que no me funcionaba el orden, utilizaba el reference() y luego el child("Post"), al ser un child ya no puedo ordenar por child (creo)
+ La solución: hacer un reference(withPath: "Posts"), desde ahí puedo hacer un sort de un child (en este caso publishDate).
+ 
+ Tutorial completo https://www.raywenderlich.com/139322/firebase-tutorial-getting-started-2
+ 
+ Filtrar fechas: Como las almaceno como timeInterval en negativo (así el orden es desc), anulo los posts privados (cuyo publishDate = null) empezando desde menos infinito
+ 
+ 
+*/
+
 import Foundation
 import UIKit
 import Firebase
 import FirebaseDatabase
+
+//import Darwin
  
 class CloudManager {
     
@@ -9,34 +22,28 @@ class CloudManager {
     
     let databaseRef : FIRDatabaseReference
     let PostRef: FIRDatabaseReference
+    let minusInfinity = Double.greatestFiniteMagnitude * -1
     //    let AuthorRef: FIRDatabaseReference
     
     //MARK: - Initialization
     init() {
         FIRApp.configure()
         databaseRef = FIRDatabase.database().reference()
-        PostRef = FIRDatabase.database().reference().child("Posts")
-        //        AuthorRef = FIRDatabase.database().reference().child("Authors")
+        PostRef = FIRDatabase.database().reference(withPath: "Posts")
     }
     
     //MARK: - Manejadores
-    func readAllPosts(callBack: @escaping (PostsIndex) -> Void ) {
-        let dictPosts = PostsIndex()
-        
-        PostRef.observe(FIRDataEventType.value, with: { (snap) in
-            
-            if snap.value is NSNull {
-                callBack(dictPosts)
-                return
-            }
-            
-            let json = snap.value as! [String: Any]
-            for postRef in json {
-                let post = Post(dict: postRef.value as! Document)
-                dictPosts.append(key: postRef.key, value: post)
-            }
-            callBack(dictPosts)
-            
+    func readAllPublicPosts(callBack: @escaping ([Post]) -> Void ) {
+        var arrPosts:[Post] = []
+            PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
+
+                for item in snap.children {
+                    let post = Post(snap: (item as! FIRDataSnapshot))
+                    arrPosts.append(post)
+                    
+                }
+                
+                callBack(arrPosts)
         })
     }
     

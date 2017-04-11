@@ -185,7 +185,7 @@ class Post:NSObject {
             if let property_name = attr.label as String! {
                 
                 if property_name != "idInCloud" &&
-                   property_name != "swErrors" {
+                   property_name != "withErrors" {
                     dict["\(property_name)"] = format(value: attr.value)
                 }
                 
@@ -208,32 +208,3 @@ class Post:NSObject {
         return retValue
     }
 }
-
-class PostsIndex {
-    private var _cards: [String: Post]
-    
-    init() {
-        _cards = [:]
-    }
-    
-    func append(key: String, value: Post) {
-        _cards[key] = value
-    }
-    
-    var count: Int {
-        get {
-            return _cards.count
-        }
-    }
-    
-    var cards: [Post] {
-        get {
-            var cards:[Post] = []
-            for (_, value) in _cards {
-                cards.append(value)
-            }
-            return cards
-        }
-    }
-}
-
