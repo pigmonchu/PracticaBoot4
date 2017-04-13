@@ -5,6 +5,8 @@ import FirebaseDatabase
 
 class Post:NSObject {
     
+    typealias userRating = [String: Int]
+    
     enum typeFile {
         case image
         case video
@@ -20,13 +22,12 @@ class Post:NSObject {
     var attachment: URL?
     var author: String
     var isPublic: Bool
-    var rating: Int
-    var numOfRatings: Int
     var lat: Double?
     var lng: Double?
     var publishDate: Date?
     var createDate: Date
     var modDate: Date
+    var scoring: userRating
     
     var withErrors:Bool
     
@@ -37,8 +38,6 @@ class Post:NSObject {
          lat            : Double?,
          lng            : Double?,
          isPublic        : Bool?,
-         rating         : Int?,
-         numOfReadings  : Int?,
          attachment     : URL?
         ) {
         
@@ -51,24 +50,6 @@ class Post:NSObject {
             self.isPublic = false
         } else {
             self.isPublic = isPublic!
-        }
-        
-        if isPublic == nil {
-            self.isPublic = false
-        } else {
-            self.isPublic = isPublic!
-        }
-        
-        if rating == nil {
-            self.rating = 0
-        } else {
-            self.rating = rating!
-        }
-        
-        if numOfReadings == nil {
-            self.numOfRatings = 0
-        } else {
-            self.numOfRatings = numOfReadings!
         }
         
         self.publishDate = nil
@@ -85,8 +66,8 @@ class Post:NSObject {
         self.modDate = now
         self.idInCloud = nil
         self.withErrors = false
+        self.scoring = [:]
 
-    
     }
     
     convenience init(snap: FIRDataSnapshot?) {
@@ -112,17 +93,19 @@ class Post:NSObject {
         withErrors = withErrors || !validateType(jsonObject["lng"], result: &lng)
         withErrors = withErrors || !validateType(jsonObject["isPublic"], result: &isPublic)
         withErrors = withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
-        withErrors = withErrors || !validateType(jsonObject["rating"] , result: &rating)
-        withErrors = withErrors || !validateType(jsonObject["numOfRatings"], result: &numOfRatings)
         
         withErrors = withErrors || !validateType(getURL(from: jsonObject["attachment"]) , result: &attachment)
         
         withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["createDate"]), result: &createDate)
         withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["modDate"]), result: &modDate)
+        
+        withErrors = withErrors || !validateType(getScoring(from: jsonObject["scoring"]), result: &scoring)
+        
+        
     }
     
     convenience override init() {
-        self.init(title: "", body: "", author: "", lat: nil, lng: nil, isPublic: nil, rating: nil, numOfReadings: nil, attachment: nil)
+        self.init(title: "", body: "", author: "", lat: nil, lng: nil, isPublic: nil, attachment: nil)
     }
     
     // MARK: - Validators
@@ -140,6 +123,24 @@ class Post:NSObject {
             return nil
         }
         return Date(timeIntervalSinceReferenceDate: (item as! Double) * -1) as Any?
+    }
+    
+    private func getScoring(from item: Any?) -> Any? {
+        guard let dictItem = item as? [String: Any] else {
+            print("\(String(describing: item)) no es del tipo Double")
+            return nil
+        }
+        
+        var retDict = userRating()
+        
+        for (userId, userScore) in dictItem {
+            if userScore as? Int != nil {
+                retDict["\(userId)"] = (userScore as! Int)
+            }
+        }
+        
+        return retDict as Any?
+        
     }
     
     private func validateType<T>(_ item: Any?, result: inout T) -> Bool {
@@ -183,8 +184,13 @@ class Post:NSObject {
             if let property_name = attr.label as String! {
                 
                 if property_name != "idInCloud" &&
-                   property_name != "withErrors" {
+                   property_name != "withErrors" &&
+                   property_name != "scoring" {
                     dict["\(property_name)"] = format(value: attr.value)
+                }
+                
+                if property_name == "scoring" {
+                    let a = 1 
                 }
                 
             }
@@ -196,6 +202,22 @@ class Post:NSObject {
         return self.idInCloud != nil
     }
     
+    var rating: Int {
+        get {
+            var tot:Int = 0
+            for (_, userRating) in scoring {
+                tot += userRating
+            }
+            return tot
+        }
+    }
+    
+    var numOfRatings : Int {
+        get {
+            return scoring.count
+        }
+    }
+
     private func format(value: Any?) -> Any? {
         var retValue: Any?
         

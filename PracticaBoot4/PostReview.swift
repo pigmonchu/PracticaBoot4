@@ -44,8 +44,8 @@ class PostReview: UIViewController {
 
     @IBAction func ratePost(_ sender: Any) {
         let thisPostRating = Int(rateSlider.value)
-        model?.rating += thisPostRating
-        model?.numOfRatings += 1
+//        model?.rating += thisPostRating
+//        model?.numOfRatings += 1
         
         cloudManager?.scorePostInCloud(model!, user: (cloudManager?.activeUser?.uid)!, rating: thisPostRating)
         self.navigationController?.popViewController(animated: true)
@@ -53,9 +53,9 @@ class PostReview: UIViewController {
     }
     
     private func showAlertLogin() {
-        let popUpLoginAlert = pushUserDialog(cancelAction: checkValorarEnabled,
+        let popUpLoginAlert = pushUserDialog(cancelAction: checkScoringControlAndData,
                                              OKAction: self.cloudManager!.login,
-                                             completion: checkValorarEnabled,
+                                             completion: checkScoringControlAndData,
                                              error: { error in
                                                 self.present(pushAlertMessages([error.localizedDescription], action: self.showAlertLogin), animated: true, completion: nil)
         })
@@ -70,7 +70,7 @@ class PostReview: UIViewController {
         
         titleTxt.text = theModel.title
         postTxt.text = theModel.body
-        checkValorarEnabled()
+        checkScoringControlAndData()
         
         let averageRating: Float
         
@@ -85,10 +85,13 @@ class PostReview: UIViewController {
         
     }
     
-    func checkValorarEnabled() {
+    func checkScoringControlAndData() {
         btnValorar.isEnabled = (cloudManager?.activeUser != nil)
         if (cloudManager?.activeUser == nil) {
             rateSlider.setValue(0, animated: true)
+        } else {
+            let myScoreInThisPost = model?.scoring[(cloudManager?.activeUser?.uid)!]
+            rateSlider.setValue(Float(myScoreInThisPost ?? 0), animated: true)
         }
     }
 }
