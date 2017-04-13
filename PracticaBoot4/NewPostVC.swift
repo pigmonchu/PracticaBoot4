@@ -2,10 +2,12 @@ import UIKit
 
 class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var cloudManager: CloudManager?
+    var model: Post?
 
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
     @IBOutlet weak var imagePost: UIImageView!
+    @IBOutlet weak var swIsPublic: UISwitch!
     
     var isReadyToPublish: Bool = false
 
@@ -17,6 +19,12 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        titlePostTxt.text = model?.title
+        textPostTxt.text = model?.body
+        swIsPublic.isOn = (model?.isPublic == nil || (model?.isPublic)!)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,7 +36,12 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     @IBAction func publishAction(_ sender: Any) {
-        isReadyToPublish = (sender as! UISwitch).isOn
+        if swIsPublic.isOn {
+            model?.publishDate = Date()
+        } else {
+            model?.publishDate = nil
+        }
+        isReadyToPublish = swIsPublic.isOn
     }
 
     @IBAction func savePostInCloud(_ sender: Any) {
@@ -37,29 +50,19 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             return
         }
         
-        let post = createPost()
-        
-        cloudManager?.createPostInCloud(post)
+        model?.title = titlePostTxt.text!
+        model?.body = textPostTxt.text!
+        model?.author = (cloudManager?.activeUser?.uid)!
+        model?.isPublic = isReadyToPublish
+        model?.attachment = URL(string: "https://static.pexels.com/photos/92902/pexels-photo-92902.jpeg")
+
+        cloudManager?.savePostInCloud(model!)
         
         navigationController?.popViewController(animated: true)
 
     }
-
-    // MARK: - Save Post
-    internal func createPost() -> Post {
-        let post = Post(title: titlePostTxt.text!,
-                        body: textPostTxt.text!,
-                        author: (cloudManager?.activeUser?.uid)!,
-                        lat: nil,
-                        lng: nil,
-                        isPublic: isReadyToPublish,
-                        rating: nil,
-                        numOfReadings: nil,
-                        attachment: URL(string: "https://static.pexels.com/photos/92902/pexels-photo-92902.jpeg")
-        )
-        return post
-    }
     
+    // MARK: - Save Post
     internal func validatePost() -> Bool {
         var messages: [String] = []
         

@@ -57,9 +57,9 @@ class AllPublicPostsVC: UITableViewController {
 
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        performSegue(withIdentifier: "ShowRatingPost", sender: indexPath)
+        performSegue(withIdentifier: "PublicDetailPost", sender: indexPath)
     }
 
     func validateInput() -> Bool {
@@ -78,7 +78,7 @@ class AllPublicPostsVC: UITableViewController {
         cloudManager?.injectMe(inViewController: segue.destination)
         cloudManager?.removeHandle(handleAllPublicPosts)
         // aqui pasamos el item selecionado
-        if segue.identifier == "ShowRatingPost" {
+        if segue.identifier == "PublicDetailPost" {
             let vc = segue.destination as! PostReview
             vc.model = self.model[(sender as! IndexPath).row]
         }
@@ -96,8 +96,6 @@ class AllPublicPostsVC: UITableViewController {
     private func setButtonLogoutStatus() {
         self.logoutButton.isEnabled = (((cloudManager?.activeUser) != nil))
     }
-    
-    
     
     private func showAlertSignUp() {
         let popUpSignUpAlert = pushUserDialog(cancelAction: nil, OKAction: self.cloudManager!.signUp, completion: nil, error:

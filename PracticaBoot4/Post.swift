@@ -58,8 +58,6 @@ class Post:NSObject {
         } else {
             self.isPublic = isPublic!
         }
-
-        
         
         if rating == nil {
             self.rating = 0

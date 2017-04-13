@@ -76,14 +76,25 @@ class CloudManager {
         databaseRef.removeObserver(withHandle: handle)
     }
     
-    func createPostInCloud(_ document: Post) {
-        createInCloud(inEntity: PostRef, document: document.toDictionary())
+    func savePostInCloud(_ document: Post) {
+        
+        if document.idInCloud == nil {
+            createInCloud(inEntity: PostRef, document: document.toDictionary())
+        } else {
+            updateInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+        }
+        
+    }
+    
+    fileprivate func updateInCloud(inEntity: FIRDatabaseReference, document: Document) {
+        inEntity.updateChildValues(document)
     }
     
     fileprivate func createInCloud(inEntity: FIRDatabaseReference, document: Document) {
+
         let key = inEntity.childByAutoId().key
         let recordWithKey = ["\(key)" : document]
-        inEntity.updateChildValues(recordWithKey)
+        updateInCloud(inEntity: inEntity, document: recordWithKey)
         
     }
     

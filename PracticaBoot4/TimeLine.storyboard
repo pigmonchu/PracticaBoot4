@@ -45,7 +45,7 @@
                     <navigationItem key="navigationItem" id="yMV-An-MNP">
                         <barButtonItem key="rightBarButtonItem" title="Item" style="done" systemItem="compose" id="J3K-Up-OeR">
                             <connections>
-                                <segue destination="fz7-Mj-aJx" kind="show" identifier="AddPost" id="rNV-QY-y6a"/>
+                                <segue destination="fz7-Mj-aJx" kind="show" identifier="privatePosts" id="rNV-QY-y6a"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -55,7 +55,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="logoutButton" destination="YUo-mo-YOY" id="zva-rf-Re5"/>
-                        <segue destination="RLF-Vz-fF2" kind="show" identifier="ShowRatingPost" id="6hQ-sq-vMN"/>
+                        <segue destination="RLF-Vz-fF2" kind="show" identifier="PublicDetailPost" id="6hQ-sq-vMN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Slk-sO-Fc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -104,6 +104,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <segue destination="Itr-Rl-A1y" kind="show" identifier="editPost" id="HZ3-pJ-EXF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peu-K4-xFZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -206,6 +209,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imagePost" destination="M8z-ex-o2m" id="wjb-5d-bKt"/>
+                        <outlet property="swIsPublic" destination="Tbd-tI-Ip8" id="6ex-fi-KKD"/>
                         <outlet property="textPostTxt" destination="WvL-11-TYV" id="aKg-ek-ECE"/>
                         <outlet property="titlePostTxt" destination="Q4q-Wo-vUh" id="xJf-xi-iaq"/>
                     </connections>
@@ -287,13 +291,35 @@
                                     <action selector="rateAction:" destination="RLF-Vz-fF2" eventType="valueChanged" id="c8Q-VX-3DO"/>
                                 </connections>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMa-xc-eHG">
+                                <rect key="frame" x="189" y="543" width="170" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="OSJ-wU-NMz"/>
+                                    <constraint firstAttribute="width" constant="170" id="fmX-vx-Vog"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNa-yg-dCX">
+                                <rect key="frame" x="16" y="543" width="140" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="T9N-sK-9Qv"/>
+                                    <constraint firstAttribute="width" constant="140" id="bxR-N5-QNV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="zFy-Zq-mtb" secondAttribute="trailing" id="0sg-qS-3g5"/>
+                            <constraint firstItem="qNa-yg-dCX" firstAttribute="top" secondItem="Rhq-Yv-MHe" secondAttribute="bottom" constant="8" id="2Na-WQ-wZH"/>
                             <constraint firstItem="agU-H1-t3M" firstAttribute="trailing" secondItem="IA7-P1-d4v" secondAttribute="trailing" id="3xx-qK-0QT"/>
                             <constraint firstItem="Rhq-Yv-MHe" firstAttribute="trailing" secondItem="K7J-vm-gBF" secondAttribute="trailingMargin" id="5Fp-G6-xcU"/>
                             <constraint firstItem="agU-H1-t3M" firstAttribute="top" secondItem="IA7-P1-d4v" secondAttribute="bottom" constant="18.5" id="7RP-JR-Ja1"/>
+                            <constraint firstItem="qNa-yg-dCX" firstAttribute="leading" secondItem="K7J-vm-gBF" secondAttribute="leadingMargin" id="CBp-lW-16p"/>
                             <constraint firstItem="agU-H1-t3M" firstAttribute="leading" secondItem="IA7-P1-d4v" secondAttribute="leading" id="Fd3-TE-dlm"/>
                             <constraint firstItem="zFy-Zq-mtb" firstAttribute="leading" secondItem="K7J-vm-gBF" secondAttribute="leadingMargin" id="IPb-zg-UsI"/>
                             <constraint firstItem="IA7-P1-d4v" firstAttribute="trailing" secondItem="ibJ-OG-dyg" secondAttribute="trailing" id="JfT-3a-JJ6"/>
@@ -303,12 +329,15 @@
                             <constraint firstItem="t7x-TB-4tM" firstAttribute="trailing" secondItem="K7J-vm-gBF" secondAttribute="trailingMargin" id="QZc-xK-DaT"/>
                             <constraint firstItem="t7x-TB-4tM" firstAttribute="leading" secondItem="K7J-vm-gBF" secondAttribute="leadingMargin" id="SAj-bu-TfA"/>
                             <constraint firstItem="Rhq-Yv-MHe" firstAttribute="top" secondItem="agU-H1-t3M" secondAttribute="bottom" constant="24" id="UfX-jR-rQI"/>
+                            <constraint firstItem="xMa-xc-eHG" firstAttribute="top" secondItem="Rhq-Yv-MHe" secondAttribute="bottom" constant="8" id="aNR-5J-tYn"/>
                             <constraint firstItem="PMD-nw-9gX" firstAttribute="top" secondItem="zFy-Zq-mtb" secondAttribute="bottom" constant="30" id="cna-ry-mcd"/>
                             <constraint firstItem="ibJ-OG-dyg" firstAttribute="trailing" secondItem="t7x-TB-4tM" secondAttribute="trailing" id="fLT-Ef-IT7"/>
+                            <constraint firstItem="xMa-xc-eHG" firstAttribute="trailing" secondItem="K7J-vm-gBF" secondAttribute="trailingMargin" id="jT6-ab-bkk"/>
                             <constraint firstItem="IA7-P1-d4v" firstAttribute="leading" secondItem="ibJ-OG-dyg" secondAttribute="leading" id="kj0-IW-NRE"/>
                             <constraint firstItem="ibJ-OG-dyg" firstAttribute="leading" secondItem="t7x-TB-4tM" secondAttribute="leading" id="vxk-es-vUB"/>
                             <constraint firstItem="t7x-TB-4tM" firstAttribute="top" secondItem="Sx0-PK-lHo" secondAttribute="bottom" constant="20" id="wGd-Dt-8dE"/>
                             <constraint firstItem="Rhq-Yv-MHe" firstAttribute="leading" secondItem="K7J-vm-gBF" secondAttribute="leadingMargin" id="z9z-90-eYF"/>
+                            <constraint firstItem="PMD-nw-9gX" firstAttribute="top" secondItem="xMa-xc-eHG" secondAttribute="bottom" constant="59" id="zbw-i3-oaR"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -320,8 +349,10 @@
                     </toolbarItems>
                     <connections>
                         <outlet property="imagePost" destination="Rhq-Yv-MHe" id="79k-8c-Nia"/>
+                        <outlet property="myRatingTxt" destination="qNa-yg-dCX" id="yiK-9L-EBX"/>
                         <outlet property="postTxt" destination="agU-H1-t3M" id="zf2-6l-bYM"/>
                         <outlet property="rateSlider" destination="zFy-Zq-mtb" id="Reg-r8-Laq"/>
+                        <outlet property="ratingTxt" destination="xMa-xc-eHG" id="BY8-OF-Ikm"/>
                         <outlet property="titleTxt" destination="ibJ-OG-dyg" id="9P0-BP-a87"/>
                     </connections>
                 </viewController>
@@ -330,4 +361,7 @@
             <point key="canvasLocation" x="445.60000000000002" y="960.2698650674663"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="HZ3-pJ-EXF"/>
+    </inferredMetricsTieBreakers>
 </document>

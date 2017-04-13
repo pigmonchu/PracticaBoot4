@@ -77,6 +77,11 @@ class AllMyPostsVC: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "editPost", sender: model[indexPath.item])
+
+    }
+    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let publish = UITableViewRowAction(style: .normal, title: "Publicar") { (action, indexPath) in
@@ -95,6 +100,20 @@ class AllMyPostsVC: UITableViewController {
         
         let VC = segue.destination
         cloudManager?.injectMe(inViewController: VC)
+        
+        guard let identifier = segue.identifier else {
+            return
+        }
+        
+        if segue.identifier == "editPost" {
+            let post = sender as? Post
+            (VC as! NewPostVC).model = post
+        }
+        if segue.identifier == "addNewPost" {
+            let post = Post()
+            (VC as! NewPostVC).model = post
+        }
+        
 
     }
     
