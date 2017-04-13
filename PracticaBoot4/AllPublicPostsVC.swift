@@ -8,8 +8,11 @@ class AllPublicPostsVC: UITableViewController {
     let cellIdentier = "POSTSCELL"
     var handleAllPublicPosts: UInt?
     
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //Carga inicial de noticias
         handleAllPublicPosts = cloudManager?.readAllPublicPosts(callBack: { (posts) in
             self.model = posts
@@ -23,6 +26,11 @@ class AllPublicPostsVC: UITableViewController {
         })
 
         self.refreshControl?.addTarget(self, action: #selector(hadleRefresh(_:)), for: UIControlEvents.valueChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setButtonLogoutStatus()
     }
     
     func hadleRefresh(_ refreshControl: UIRefreshControl) {
@@ -62,8 +70,6 @@ class AllPublicPostsVC: UITableViewController {
         }
         return true
     }
-
-    
     
     // MARK: - Navigation
 
@@ -81,6 +87,17 @@ class AllPublicPostsVC: UITableViewController {
     @IBAction func signUp(_ sender: Any) {
         showAlertSignUp()
     }
+    
+    @IBAction func logout(_ sender: Any) {
+        cloudManager?.logout()
+        setButtonLogoutStatus()
+    }
+    
+    private func setButtonLogoutStatus() {
+        self.logoutButton.isEnabled = (((cloudManager?.activeUser) != nil))
+    }
+    
+    
     
     private func showAlertSignUp() {
         let popUpSignUpAlert = pushUserDialog(cancelAction: nil, OKAction: self.cloudManager!.signUp, completion: nil, error:

@@ -33,7 +33,8 @@ class CloudManager {
     init() {
         FIRApp.configure()
         databaseRef = FIRDatabase.database().reference()
-        PostRef = FIRDatabase.database().reference(withPath: "Posts")
+//        PostRef = FIRDatabase.database().reference(withPath: "Posts")
+        PostRef = FIRDatabase.database().reference().child("Posts")
         activeUser = nil
     }
     

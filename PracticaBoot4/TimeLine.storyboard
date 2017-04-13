@@ -36,6 +36,11 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Qtt-lh-Jw4"/>
+                        <barButtonItem title="Logout" id="YUo-mo-YOY">
+                            <connections>
+                                <action selector="logout:" destination="93k-iG-gRG" id="WJ5-N1-Ve4"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="yMV-An-MNP">
                         <barButtonItem key="rightBarButtonItem" title="Item" style="done" systemItem="compose" id="J3K-Up-OeR">
@@ -49,6 +54,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
+                        <outlet property="logoutButton" destination="YUo-mo-YOY" id="zva-rf-Re5"/>
                         <segue destination="RLF-Vz-fF2" kind="show" identifier="ShowRatingPost" id="6hQ-sq-vMN"/>
                     </connections>
                 </tableViewController>
