@@ -52,7 +52,11 @@ class CloudManager {
     }
     
     func readAllMyPosts(callBack: @escaping ([Post]) -> Void) -> UInt {
-        return PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
+        guard let userId = self.activeUser?.uid else {
+            return 0
+        }
+        
+        return PostRef.queryOrdered(byChild: "author").queryEqual(toValue: userId as Any).observe(FIRDataEventType.value, with: { (snap) in
             var arrPosts:[Post] = []
             
             for item in snap.children {

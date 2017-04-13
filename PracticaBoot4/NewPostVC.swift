@@ -49,7 +49,7 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     internal func createPost() -> Post {
         let post = Post(title: titlePostTxt.text!,
                         body: textPostTxt.text!,
-                        author: "1",
+                        author: (cloudManager?.activeUser?.uid)!,
                         lat: nil,
                         lng: nil,
                         isPublic: isReadyToPublish,
