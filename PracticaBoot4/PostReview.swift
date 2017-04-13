@@ -3,6 +3,7 @@ import UIKit
 class PostReview: UIViewController {
     var cloudManager: CloudManager? = nil
     var model: Post?
+    var alreadyRatedMe = false
     
     @IBOutlet weak var rateSlider: UISlider!
     @IBOutlet weak var imagePost: UIImageView!
@@ -10,7 +11,8 @@ class PostReview: UIViewController {
     @IBOutlet weak var titleTxt: UITextField!
     @IBOutlet weak var ratingTxt: UILabel!
     @IBOutlet weak var myRatingTxt: UILabel!
-
+    @IBOutlet weak var btnValorar: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         postTxt.isUserInteractionEnabled = false
@@ -25,6 +27,11 @@ class PostReview: UIViewController {
     }
     
     @IBAction func rateAction(_ sender: Any) {
+        if (cloudManager?.activeUser == nil) {
+            showAlertLogin()
+            return
+        }
+        
         let control = sender as! UISlider
         let rating = control.value
         let iRating = Int(rating + 0.5)
@@ -36,12 +43,24 @@ class PostReview: UIViewController {
     }
 
     @IBAction func ratePost(_ sender: Any) {
-        model?.rating += Int(rateSlider.value)
+        let thisPostRating = Int(rateSlider.value)
+        model?.rating += thisPostRating
         model?.numOfRatings += 1
         
-        cloudManager?.savePostInCloud(model!)
+        cloudManager?.scorePostInCloud(model!, user: (cloudManager?.activeUser?.uid)!, rating: thisPostRating)
         self.navigationController?.popViewController(animated: true)
         
+    }
+    
+    private func showAlertLogin() {
+        let popUpLoginAlert = pushUserDialog(cancelAction: checkValorarEnabled,
+                                             OKAction: self.cloudManager!.login,
+                                             completion: checkValorarEnabled,
+                                             error: { error in
+                                                self.present(pushAlertMessages([error.localizedDescription], action: self.showAlertLogin), animated: true, completion: nil)
+        })
+        
+        self.present(popUpLoginAlert, animated: true, completion: nil)
     }
     
     func showData() {
@@ -51,6 +70,7 @@ class PostReview: UIViewController {
         
         titleTxt.text = theModel.title
         postTxt.text = theModel.body
+        checkValorarEnabled()
         
         let averageRating: Float
         
@@ -59,8 +79,16 @@ class PostReview: UIViewController {
         } else {
              averageRating = Float(theModel.rating) / Float(theModel.numOfRatings)
         }
-        
-        ratingTxt.text = "\(averageRating ) de 5"
+
         myRatingTxt.text = "\(rateSlider.value)"
+        ratingTxt.text = "\(averageRating ) de 5"
+        
+    }
+    
+    func checkValorarEnabled() {
+        btnValorar.isEnabled = (cloudManager?.activeUser != nil)
+        if (cloudManager?.activeUser == nil) {
+            rateSlider.setValue(0, animated: true)
+        }
     }
 }

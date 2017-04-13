@@ -2,6 +2,8 @@
  Razón por la que no me funcionaba el orden, utilizaba el reference() y luego el child("Post"), al ser un child ya no puedo ordenar por child (creo)
  La solución: hacer un reference(withPath: "Posts"), desde ahí puedo hacer un sort de un child (en este caso publishDate).
  
+ 13/IV/'17 - witPath está deprecado y ahora me funciona... No tengo ni idea de porque fallaba
+ 
  Tutorial completo https://www.raywenderlich.com/139322/firebase-tutorial-getting-started-2
  
  Filtrar fechas: Como las almaceno como timeInterval en negativo (así el orden es desc), anulo los posts privados (cuyo publishDate = null) empezando desde menos infinito
@@ -24,7 +26,6 @@ class CloudManager {
     
     let databaseRef : FIRDatabaseReference
     let PostRef: FIRDatabaseReference
-    let RatingRef: FIRDatabaseReference
     let minusInfinity = Double.greatestFiniteMagnitude * -1
     var activeUser: User?
     var observerUserStatus: FIRAuthStateDidChangeListenerHandle?
@@ -35,7 +36,6 @@ class CloudManager {
         databaseRef = FIRDatabase.database().reference()
 //      PostRef = FIRDatabase.database().reference(withPath: "Posts")
         PostRef = FIRDatabase.database().reference().child("Posts")
-        RatingRef = FIRDatabase.database().reference().child("Ratings")
         activeUser = nil
     }
     
@@ -87,15 +87,35 @@ class CloudManager {
         
     }
     
+    func scorePostInCloud(_ document: Post, user: String, rating: Int) {
+        if !remoteReferenceOK(document) {
+            return
+        }
+        let ratingReference = document.idInCloud!.child("scoring")
+        var ratingDocument = Document()
+        ratingDocument["\(user)"] = rating
+        
+        updateInCloud(inEntity: ratingReference, document: ratingDocument)
+        updateInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+    }
+    
     func deletePostInCloud(_ document: Post) {
-        if document.idInCloud == nil {
-            print("El post \(document.title) carece de referencia remota")
+        if !remoteReferenceOK(document) {
             return
         }
         
         deleteInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
     }
     
+    private func remoteReferenceOK(_ post: Post) -> Bool {
+        if !post.isRemoteReferenced() {
+            print("El post \(post.title) carece de referencia remota")
+            return false
+        }
+        return true
+    }
+    
+    //MARK: - REST POST
     fileprivate func deleteInCloud(inEntity: FIRDatabaseReference, document: Document) {
         inEntity.removeValue()
     }

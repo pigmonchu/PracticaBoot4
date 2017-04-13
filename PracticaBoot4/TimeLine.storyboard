@@ -348,6 +348,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <connections>
+                        <outlet property="btnValorar" destination="Uok-rF-3nE" id="7x6-pu-Oo5"/>
                         <outlet property="imagePost" destination="Rhq-Yv-MHe" id="79k-8c-Nia"/>
                         <outlet property="myRatingTxt" destination="qNa-yg-dCX" id="yiK-9L-EBX"/>
                         <outlet property="postTxt" destination="agU-H1-t3M" id="zf2-6l-bYM"/>

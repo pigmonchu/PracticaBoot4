@@ -192,6 +192,10 @@ class Post:NSObject {
         return dict
     }
     
+    func isRemoteReferenced() -> Bool {
+        return self.idInCloud != nil
+    }
+    
     private func format(value: Any?) -> Any? {
         var retValue: Any?
         
