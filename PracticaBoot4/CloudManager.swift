@@ -19,10 +19,14 @@ import FirebaseDatabase
 class CloudManager {
     
     typealias Document = [String : Any]
+    typealias action = () -> ()
+    typealias errorProcess = (_:Error) -> ()
     
     let databaseRef : FIRDatabaseReference
     let PostRef: FIRDatabaseReference
     let minusInfinity = Double.greatestFiniteMagnitude * -1
+    var activeUser: User?
+    var observerUserStatus: FIRAuthStateDidChangeListenerHandle?
     //    let AuthorRef: FIRDatabaseReference
     
     //MARK: - Initialization
@@ -30,21 +34,41 @@ class CloudManager {
         FIRApp.configure()
         databaseRef = FIRDatabase.database().reference()
         PostRef = FIRDatabase.database().reference(withPath: "Posts")
+        activeUser = nil
     }
     
     //MARK: - Manejadores
-    func readAllPublicPosts(callBack: @escaping ([Post]) -> Void ) {
-            PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
+    func readAllPublicPosts(callBack: @escaping ([Post]) -> Void ) -> UInt{
+            return PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
                 var arrPosts:[Post] = []
 
                 for item in snap.children {
                     let post = Post(snap: (item as! FIRDataSnapshot))
                     arrPosts.append(post)
-                    
                 }
                 
                 callBack(arrPosts)
         })
+    }
+    
+    func readAllMyPosts(callBack: @escaping ([Post]) -> Void) -> UInt {
+        return PostRef.queryOrdered(byChild: "publishDate").queryStarting(atValue: minusInfinity).observe(FIRDataEventType.value, with: { (snap) in
+            var arrPosts:[Post] = []
+            
+            for item in snap.children {
+                let post = Post(snap: (item as! FIRDataSnapshot))
+                arrPosts.append(post)
+            }
+            
+            callBack(arrPosts)
+        })
+    }
+    
+    func removeHandle(_ perhapsAHandle: UInt?) {
+        guard let handle = perhapsAHandle else {
+            return
+        }
+        databaseRef.removeObserver(withHandle: handle)
     }
     
     func createPostInCloud(_ document: Post) {
@@ -55,9 +79,93 @@ class CloudManager {
         let key = inEntity.childByAutoId().key
         let recordWithKey = ["\(key)" : document]
         inEntity.updateChildValues(recordWithKey)
+        
     }
     
-// MARK: - autoinyección. Me parece una porquería pero no quiero escribir. Tendré que pensar algo mejor en su momento
+    //MARK: - Autenticación
+    
+    func signUp(withEmail email: String, password: String, observer:  action? = nil, error:  errorProcess? = nil){
+        
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (loggedUser, loginError) in
+            if let defError = loginError {
+                let errorCode = FIRAuthErrorCode(rawValue: defError._code)
+                
+                //                if errorCode == FIRAuthErrorCodeUserNotFound {
+                //                    self.singUp(withEmail: email, password: password, observer: observer, error: error)
+                //                }
+                print("Login: error \(defError) \(defError.localizedDescription)")
+                self.activeUser = nil
+                if error != nil {
+                    error!(defError)
+                }
+                return
+            }
+            self.activeUser = User(fireBaseUser: loggedUser!)
+            if observer != nil {
+                self.checkUser(logged: observer!)
+            }
+        })
+    }
+    
+    func login(withEmail email: String, password: String, observer:  action? = nil, error:  errorProcess? = nil){
+        
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (loggedUser, loginError) in
+            if let defError = loginError {
+                let errorCode = FIRAuthErrorCode(rawValue: defError._code)
+                print("Login: error \(defError) \(defError.localizedDescription)")
+                
+                if errorCode == .errorCodeUserNotFound {
+                    self.signUp(withEmail: email, password: password, observer: observer, error: error)
+                    return
+                }
+
+                self.activeUser = nil
+                if error != nil {
+                    error!(defError)
+                }
+                return
+            }
+            self.activeUser = User(fireBaseUser: loggedUser!)
+            if observer != nil {
+                self.checkUser(logged: observer!)
+            }
+        })
+    }
+
+    func logout() {
+        do {
+            try FIRAuth.auth()?.signOut()
+            self.activeUser = nil
+        } catch {
+            
+        }
+    }
+    
+    func checkUser(logged: @escaping action, unlogged: action? = nil) {
+        
+        self.observerUserStatus = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if user != nil {
+                logged()
+                return
+            }
+            self.activeUser = nil
+            
+            guard let defUnlogged = unlogged else {
+                return
+            }
+            defUnlogged()
+        })
+    }
+    
+    func removeCheckUser() {
+        guard let observer = self.observerUserStatus else {
+            return
+        }
+        
+        FIRAuth.auth()?.removeStateDidChangeListener(observer)
+    }
+    
+    // MARK: - autoinyección. Me parece una porquería pero no quiero escribir. Tendré que pensar algo mejor en su momento
     func injectMe(inViewController VC: UIViewController) {
         (VC as? PostReview)?.cloudManager = self
         (VC as? NewPostVC)?.cloudManager = self

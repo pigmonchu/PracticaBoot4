@@ -6,15 +6,16 @@ class AllPublicPostsVC: UITableViewController {
     
     var model:[Post] = []
     let cellIdentier = "POSTSCELL"
+    var handleAllPublicPosts: UInt?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Carga inicial de noticias
-        cloudManager?.readAllPublicPosts(callBack: { (posts) in
+        handleAllPublicPosts = cloudManager?.readAllPublicPosts(callBack: { (posts) in
             self.model = posts
             self.tableView.reloadData()
             if (!self.validateInput()) {
-                self.present(pushAlertMessages(["No se muestran todos los post, algunos contienen errores"]),
+                self.present(pushAlertMessages(["No se muestran todos los post, algunos contienen errores"], action: nil),
                              animated: true,
                              completion: nil)
             }
@@ -69,7 +70,7 @@ class AllPublicPostsVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         cloudManager?.injectMe(inViewController: segue.destination)
-        
+        cloudManager?.removeHandle(handleAllPublicPosts)
         // aqui pasamos el item selecionado
         if segue.identifier == "ShowRatingPost" {
             let vc = segue.destination as! PostReview
@@ -77,5 +78,18 @@ class AllPublicPostsVC: UITableViewController {
         }
     }
 
+    @IBAction func signUp(_ sender: Any) {
+        showAlertSignUp()
+    }
+    
+    private func showAlertSignUp() {
+        let popUpSignUpAlert = pushUserDialog(cancelAction: nil, OKAction: self.cloudManager!.signUp, completion: nil, error:
+        { error in
+            self.present(pushAlertMessages([error.localizedDescription], action: self.showAlertSignUp), animated: true, completion: nil)
+        })
+        
+        self.present(popUpSignUpAlert, animated: true, completion: nil)
+        
+    }
 }
 

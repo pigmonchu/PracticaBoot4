@@ -11,6 +11,7 @@
 		46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB11E98CDD000C335D6 /* CloudManager.swift */; };
 		46211AB51E98CFDD00C335D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB41E98CFDD00C335D6 /* Post.swift */; };
 		46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB61E98F0F600C335D6 /* MainNavigationController.swift */; };
+		463CCC7D1E9DE6F700EB8B76 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CCC7C1E9DE6F700EB8B76 /* User.swift */; };
 		46A3FE421E9BF91200BA2D92 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3FE411E9BF91200BA2D92 /* Utils.swift */; };
 		46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FA91E99D9AA00D25FA5 /* Errors.swift */; };
 		46F34FAC1E99E7D800D25FA5 /* AlertsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */; };
@@ -32,6 +33,7 @@
 		46211AB11E98CDD000C335D6 /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		46211AB41E98CFDD00C335D6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		46211AB61E98F0F600C335D6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		463CCC7C1E9DE6F700EB8B76 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46A3FE411E9BF91200BA2D92 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		46F34FA91E99D9AA00D25FA5 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsManager.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				46211AB41E98CFDD00C335D6 /* Post.swift */,
 				46F34FA91E99D9AA00D25FA5 /* Errors.swift */,
+				463CCC7C1E9DE6F700EB8B76 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -99,12 +102,12 @@
 		5D931CE41E83EEEA005051E9 /* PracticaBoot4 */ = {
 			isa = PBXGroup;
 			children = (
-				46211AB01E98CDBE00C335D6 /* Managers */,
 				5D931CF71E83F069005051E9 /* AppDelegate */,
 				5D931CF81E83F076005051E9 /* ViewControllers */,
 				46211AB31E98CFA900C335D6 /* Models */,
 				5D931CF91E83F087005051E9 /* Storyboards */,
 				5D931CFB1E83F0A8005051E9 /* Resources */,
+				46211AB01E98CDBE00C335D6 /* Managers */,
 				46A3FE411E9BF91200BA2D92 /* Utils.swift */,
 			);
 			path = PracticaBoot4;
@@ -121,8 +124,6 @@
 		5D931CF81E83F076005051E9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				46211AB61E98F0F600C335D6 /* MainNavigationController.swift */,
-				5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */,
 				5D931D081E8414BB005051E9 /* All users */,
 				5D931D091E8414CA005051E9 /* Auth Users */,
 			);
@@ -151,6 +152,8 @@
 		5D931D081E8414BB005051E9 /* All users */ = {
 			isa = PBXGroup;
 			children = (
+				46211AB61E98F0F600C335D6 /* MainNavigationController.swift */,
+				5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */,
 				5D931D021E83F67C005051E9 /* PostReview.swift */,
 			);
 			name = "All users";
@@ -315,6 +318,7 @@
 				46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */,
 				5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */,
 				46A3FE421E9BF91200BA2D92 /* Utils.swift in Sources */,
+				463CCC7D1E9DE6F700EB8B76 /* User.swift in Sources */,
 				46211AB51E98CFDD00C335D6 /* Post.swift in Sources */,
 				46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */,
 				5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */,

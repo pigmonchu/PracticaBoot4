@@ -5,7 +5,6 @@
  */
 
 import UIKit
-import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.        
        
-        var cloudManager = CloudManager()
+        let cloudManager = CloudManager()
+        cloudManager.logout()
         
         if let rootVC = window?.rootViewController as? MainNavigationController {
             rootVC.cloudManager = cloudManager

@@ -72,7 +72,7 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         }
         
         if messages.count > 0 {
-            present(pushAlertMessages(messages), animated: true, completion: nil)
+            present(pushAlertMessages(messages, action: nil), animated: true, completion: nil)
             return false
         }
         

@@ -34,6 +34,9 @@
                             <outlet property="delegate" destination="93k-iG-gRG" id="HeA-fi-yAD"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Qtt-lh-Jw4"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="yMV-An-MNP">
                         <barButtonItem key="rightBarButtonItem" title="Item" style="done" systemItem="compose" id="J3K-Up-OeR">
                             <connections>
@@ -76,7 +79,13 @@
                             <outlet property="delegate" destination="fz7-Mj-aJx" id="18N-rh-it4"/>
                         </connections>
                     </tableView>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Logout" id="yXk-Wa-aM6">
+                            <connections>
+                                <action selector="logoutAction:" destination="fz7-Mj-aJx" id="S1r-Ie-8eo"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Title" id="xmQ-al-ZmU">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="cx9-HE-BoF">
                             <connections>

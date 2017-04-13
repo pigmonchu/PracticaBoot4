@@ -18,13 +18,36 @@ class AllMyPostsVC: UITableViewController {
     var cloudManager: CloudManager? = nil
 
     let cellIdentifier = "POSTAUTOR"
-    
-    var model = ["test1", "test2"]
+    var handleAllMyPosts : UInt?
+    var model:[Post] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: UIControlEvents.valueChanged)
+
+        if cloudManager?.activeUser == nil {
+            self.showAlertLogin()
+        } else {
+            cloudManager?.checkUser(logged: loadMyPosts)
+        }
+       
+    }
+    
+    private func showAlertLogin() {
+        let popUpLoginAlert = pushUserDialog(cancelAction: closeMe, OKAction: self.cloudManager!.login, completion: loadMyPosts, error:
+        { error in
+            self.present(pushAlertMessages([error.localizedDescription], action: self.showAlertLogin), animated: true, completion: nil)
+        })
+        
+        self.present(popUpLoginAlert, animated: true, completion: nil)
+    }
+    
+    private func loadMyPosts() {
+        self.handleAllMyPosts = self.cloudManager?.readAllMyPosts(callBack: { (posts) in
+            self.model = posts
+            self.tableView.reloadData()
+        })
     }
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -34,6 +57,7 @@ class AllMyPostsVC: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
 
     // MARK: - Table view data source
 
@@ -48,7 +72,7 @@ class AllMyPostsVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        cell.textLabel?.text = model[indexPath.row]
+        cell.textLabel?.text = model[indexPath.row].title
     
         return cell
     }
@@ -73,4 +97,16 @@ class AllMyPostsVC: UITableViewController {
         cloudManager?.injectMe(inViewController: VC)
 
     }
+    
+    func closeMe() {
+        self.navigationController?.popViewController(animated: true)
+        cloudManager?.removeCheckUser()
+    }
+    
+    @IBAction func logoutAction(_ sender: Any) {
+        cloudManager?.logout()
+        closeMe()
+    }
+    
+    
 }
