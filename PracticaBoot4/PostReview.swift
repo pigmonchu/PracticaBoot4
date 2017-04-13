@@ -36,11 +36,31 @@ class PostReview: UIViewController {
     }
 
     @IBAction func ratePost(_ sender: Any) {
+        model?.rating += Int(rateSlider.value)
+        model?.numOfRatings += 1
+        
+        cloudManager?.savePostInCloud(model!)
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     func showData() {
-        titleTxt.text = model?.title
-        postTxt.text = model?.body
-        ratingTxt.text = "\(model?.rating ?? 0.0) de 5"
+        guard let theModel = model else {
+            return
+        }
+        
+        titleTxt.text = theModel.title
+        postTxt.text = theModel.body
+        
+        let averageRating: Float
+        
+        if theModel.numOfRatings == 0 {
+             averageRating = 0
+        } else {
+             averageRating = Float(theModel.rating) / Float(theModel.numOfRatings)
+        }
+        
+        ratingTxt.text = "\(averageRating ) de 5"
+        myRatingTxt.text = "\(rateSlider.value)"
     }
 }

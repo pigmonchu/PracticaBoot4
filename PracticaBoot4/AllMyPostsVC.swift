@@ -83,13 +83,25 @@ class AllMyPostsVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
+
         let publish = UITableViewRowAction(style: .normal, title: "Publicar") { (action, indexPath) in
-            // Codigo para publicar el post
+            let theModel = self.model[indexPath.item]
+            if theModel.isPublic {
+                return
+            }
+            
+            theModel.isPublic = true
+            theModel.publishDate = Date()
+            
+            self.cloudManager?.savePostInCloud(theModel)
+            
         }
         publish.backgroundColor = UIColor.green
+        
         let deleteRow = UITableViewRowAction(style: .destructive, title: "Eliminar") { (action, indexPath) in
-            // codigo para eliminar
+            
+            self.cloudManager?.deletePostInCloud(self.model[indexPath.item])
+        
         }
         return [publish, deleteRow]
     }
@@ -101,10 +113,6 @@ class AllMyPostsVC: UITableViewController {
         let VC = segue.destination
         cloudManager?.injectMe(inViewController: VC)
         
-        guard let identifier = segue.identifier else {
-            return
-        }
-        
         if segue.identifier == "editPost" {
             let post = sender as? Post
             (VC as! NewPostVC).model = post
@@ -113,7 +121,6 @@ class AllMyPostsVC: UITableViewController {
             let post = Post()
             (VC as! NewPostVC).model = post
         }
-        
 
     }
     

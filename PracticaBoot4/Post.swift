@@ -20,8 +20,8 @@ class Post:NSObject {
     var attachment: URL?
     var author: String
     var isPublic: Bool
-    var rating: Double
-    var numOfReadings: Int
+    var rating: Int
+    var numOfRatings: Int
     var lat: Double?
     var lng: Double?
     var publishDate: Date?
@@ -37,7 +37,7 @@ class Post:NSObject {
          lat            : Double?,
          lng            : Double?,
          isPublic        : Bool?,
-         rating         : Double?,
+         rating         : Int?,
          numOfReadings  : Int?,
          attachment     : URL?
         ) {
@@ -66,9 +66,9 @@ class Post:NSObject {
         }
         
         if numOfReadings == nil {
-            self.numOfReadings = 0
+            self.numOfRatings = 0
         } else {
-            self.numOfReadings = numOfReadings!
+            self.numOfRatings = numOfReadings!
         }
         
         self.publishDate = nil
@@ -113,7 +113,7 @@ class Post:NSObject {
         withErrors = withErrors || !validateType(jsonObject["isPublic"], result: &isPublic)
         withErrors = withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
         withErrors = withErrors || !validateType(jsonObject["rating"] , result: &rating)
-        withErrors = withErrors || !validateType(jsonObject["numOfReadings"], result: &numOfReadings)
+        withErrors = withErrors || !validateType(jsonObject["numOfRatings"], result: &numOfRatings)
         
         withErrors = withErrors || !validateType(getURL(from: jsonObject["attachment"]) , result: &attachment)
         

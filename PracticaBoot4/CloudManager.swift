@@ -24,17 +24,18 @@ class CloudManager {
     
     let databaseRef : FIRDatabaseReference
     let PostRef: FIRDatabaseReference
+    let RatingRef: FIRDatabaseReference
     let minusInfinity = Double.greatestFiniteMagnitude * -1
     var activeUser: User?
     var observerUserStatus: FIRAuthStateDidChangeListenerHandle?
-    //    let AuthorRef: FIRDatabaseReference
     
     //MARK: - Initialization
     init() {
         FIRApp.configure()
         databaseRef = FIRDatabase.database().reference()
-//        PostRef = FIRDatabase.database().reference(withPath: "Posts")
+//      PostRef = FIRDatabase.database().reference(withPath: "Posts")
         PostRef = FIRDatabase.database().reference().child("Posts")
+        RatingRef = FIRDatabase.database().reference().child("Ratings")
         activeUser = nil
     }
     
@@ -86,6 +87,19 @@ class CloudManager {
         
     }
     
+    func deletePostInCloud(_ document: Post) {
+        if document.idInCloud == nil {
+            print("El post \(document.title) carece de referencia remota")
+            return
+        }
+        
+        deleteInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+    }
+    
+    fileprivate func deleteInCloud(inEntity: FIRDatabaseReference, document: Document) {
+        inEntity.removeValue()
+    }
+    
     fileprivate func updateInCloud(inEntity: FIRDatabaseReference, document: Document) {
         inEntity.updateChildValues(document)
     }
@@ -97,6 +111,7 @@ class CloudManager {
         updateInCloud(inEntity: inEntity, document: recordWithKey)
         
     }
+    
     
     //MARK: - Autenticación
     

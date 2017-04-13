@@ -123,9 +123,6 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         self.present(picker, animated: true, completion: nil)
     }
-
-
-    
 }
 
 // MARK: - Delegado del imagepicker
