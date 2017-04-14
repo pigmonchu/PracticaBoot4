@@ -29,6 +29,8 @@ class CloudManager {
     let minusInfinity = Double.greatestFiniteMagnitude * -1
     var activeUser: User?
     var observerUserStatus: FIRAuthStateDidChangeListenerHandle?
+    let storageRef: FIRStorageReference
+    
     
     //MARK: - Initialization
     init() {
@@ -36,7 +38,9 @@ class CloudManager {
         databaseRef = FIRDatabase.database().reference()
 //      PostRef = FIRDatabase.database().reference(withPath: "Posts")
         PostRef = FIRDatabase.database().reference().child("Posts")
+        storageRef = FIRStorage.storage().reference(forURL: "gs://kciv-scoop-2.appspot.com/")
         activeUser = nil
+        
     }
     
     //MARK: - Manejadores
@@ -126,8 +130,10 @@ class CloudManager {
     
     fileprivate func createInCloud(inEntity: FIRDatabaseReference, document: Document) {
 
+        var theDocument = document
         let key = inEntity.childByAutoId().key
-        let recordWithKey = ["\(key)" : document]
+        theDocument["id"] = key
+        let recordWithKey = ["\(key)" : theDocument]
         updateInCloud(inEntity: inEntity, document: recordWithKey)
         
     }

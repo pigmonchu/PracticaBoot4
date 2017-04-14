@@ -3,6 +3,7 @@ import UIKit
 class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var cloudManager: CloudManager?
     var model: Post?
+    var imageIsChanged = false
 
     @IBOutlet weak var titlePostTxt: UITextField!
     @IBOutlet weak var textPostTxt: UITextField!
@@ -14,6 +15,7 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     var imageCaptured: UIImage! {
         didSet {
             imagePost.image = imageCaptured
+            imageIsChanged = true
         }
     }
     
@@ -54,12 +56,36 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         model?.body = textPostTxt.text!
         model?.author = (cloudManager?.activeUser?.uid)!
         model?.isPublic = isReadyToPublish
-        model?.attachment = URL(string: "https://static.pexels.com/photos/92902/pexels-photo-92902.jpeg")
-
-        cloudManager?.savePostInCloud(model!)
+        
+        if imageIsChanged && imageCaptured != nil {
+            saveImage(imageCaptured, inPost: model!)
+        } else {
+            cloudManager?.savePostInCloud(model!)
+        }
         
         navigationController?.popViewController(animated: true)
 
+    }
+    
+    func saveImage(_ image: UIImage, inPost post: Post) {
+        let uniqueId = UUID().uuidString
+        let imageRef = cloudManager?.storageRef.child("images/\(uniqueId).jpg")
+        
+        let _ = imageRef?.put(UIImageJPEGRepresentation(image, 0.8)!, metadata: nil) { metadata, error in
+            if (error != nil) {
+                self.present(pushAlertMessages(["Error: \(error!.localizedDescription)"], action: nil), animated: true, completion: nil)
+            } else {
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                let imageURL = metadata?.downloadURL()
+                var urlString: String?
+                
+                if imageURL != nil {
+                    urlString = (imageURL?.absoluteString)!
+                    post.attachment = urlString
+                    self.cloudManager?.savePostInCloud(post)
+                }
+            }
+        }
     }
     
     // MARK: - Save Post

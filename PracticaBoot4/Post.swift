@@ -17,9 +17,10 @@ class Post:NSObject {
     //MARK: - Stored properties
     var idInCloud: FIRDatabaseReference?
     
+    var id: String
     var title: String
     var body: String
-    var attachment: URL?
+    var attachment: String?
     var author: String
     var isPublic: Bool
     var lat: Double?
@@ -37,8 +38,8 @@ class Post:NSObject {
          author         : String,
          lat            : Double?,
          lng            : Double?,
-         isPublic        : Bool?,
-         attachment     : URL?
+         isPublic       : Bool?,
+         attachment     : String?
         ) {
         
         self.title = title
@@ -67,6 +68,7 @@ class Post:NSObject {
         self.idInCloud = nil
         self.withErrors = false
         self.scoring = [:]
+        self.id = ""
 
     }
     
@@ -86,6 +88,7 @@ class Post:NSObject {
     convenience init(dict jsonObject: CloudManager.Document) {
         self.init()
         
+        withErrors = withErrors || !validateMandatory(jsonObject["id"], result: &id)
         withErrors = withErrors || !validateMandatory(jsonObject["title"], result: &title)
         withErrors = withErrors || !validateMandatory(jsonObject["body"], result: &body)
         withErrors = withErrors || !validateMandatory(jsonObject["author"], result: &author)
@@ -94,7 +97,7 @@ class Post:NSObject {
         withErrors = withErrors || !validateType(jsonObject["isPublic"], result: &isPublic)
         withErrors = withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
         
-        withErrors = withErrors || !validateType(getURL(from: jsonObject["attachment"]) , result: &attachment)
+        withErrors = withErrors || !validateType(jsonObject["attachment"] , result: &attachment)
         
         withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["createDate"]), result: &createDate)
         withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["modDate"]), result: &modDate)

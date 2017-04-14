@@ -44,8 +44,6 @@ class PostReview: UIViewController {
 
     @IBAction func ratePost(_ sender: Any) {
         let thisPostRating = Int(rateSlider.value)
-//        model?.rating += thisPostRating
-//        model?.numOfRatings += 1
         
         cloudManager?.scorePostInCloud(model!, user: (cloudManager?.activeUser?.uid)!, rating: thisPostRating)
         self.navigationController?.popViewController(animated: true)
