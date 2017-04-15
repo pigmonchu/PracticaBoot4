@@ -198,6 +198,10 @@ class Post:NSObject {
     
     var rating: Int {
         get {
+            if scoring.count == 0 {
+                return -1
+            }
+            
             var tot:Int = 0
             for (_, userRating) in scoring {
                 tot += userRating

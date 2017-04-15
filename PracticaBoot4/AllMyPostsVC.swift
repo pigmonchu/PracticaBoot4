@@ -72,7 +72,20 @@ class AllMyPostsVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        cell.textLabel?.text = model[indexPath.row].title
+
+        //Aquí debería poner una celda personalizada pero dado que no tengo tiempo lo resuelvo a las bravas
+        
+        let post = model[indexPath.row]
+        
+        cell.textLabel?.text = post.title
+        
+        if post.publishDate == nil {
+            cell.backgroundColor = UIColor(red:0.95, green:0.82, blue:0.79, alpha:1.0)
+        } else {
+            cell.backgroundColor = UIColor(red:0.87, green:0.96, blue:0.82, alpha:1.0)
+        }
+        
+        
     
         return cell
     }

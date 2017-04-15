@@ -9,6 +9,7 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBOutlet weak var textPostTxt: UITextField!
     @IBOutlet weak var imagePost: UIImageView!
     @IBOutlet weak var swIsPublic: UISwitch!
+    @IBOutlet weak var ratingPostTxt: UILabel!
     
     var isReadyToPublish: Bool = false
 
@@ -140,9 +141,20 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     // MARK: - Utilidades
     func showData() {
         
-        titlePostTxt.text = model?.title
-        textPostTxt.text = model?.body
-        swIsPublic.isOn = (model?.control.isPublic)!
+        guard let theModel = model else {
+            return
+        }
+        
+        titlePostTxt.text = theModel.title
+        textPostTxt.text = theModel.body
+        swIsPublic.isOn = theModel.control.isPublic
+        
+        if theModel.rating == -1 {
+            ratingPostTxt.text = ""
+        } else {
+            ratingPostTxt.text = "\(model!.rating ) sobre 5"
+        }
+        
         
         showImage()
     }
