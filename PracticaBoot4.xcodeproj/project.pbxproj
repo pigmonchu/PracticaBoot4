@@ -7,27 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46211AAC1E98C64600C335D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46211AAB1E98C64600C335D6 /* GoogleService-Info.plist */; };
+		46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB11E98CDD000C335D6 /* CloudManager.swift */; };
+		46211AB51E98CFDD00C335D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB41E98CFDD00C335D6 /* Post.swift */; };
+		46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46211AB61E98F0F600C335D6 /* MainNavigationController.swift */; };
+		463CCC7D1E9DE6F700EB8B76 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CCC7C1E9DE6F700EB8B76 /* User.swift */; };
+		46A3FE421E9BF91200BA2D92 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3FE411E9BF91200BA2D92 /* Utils.swift */; };
+		46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FA91E99D9AA00D25FA5 /* Errors.swift */; };
+		46F34FAC1E99E7D800D25FA5 /* AlertsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */; };
+		52B25EC8A0AF7F19B73B952F /* Pods_PracticaBoot4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */; };
 		5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931CE51E83EEEA005051E9 /* AppDelegate.swift */; };
 		5D931CED1E83EEEA005051E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEC1E83EEEA005051E9 /* Assets.xcassets */; };
 		5D931CF01E83EEEA005051E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CEE1E83EEEA005051E9 /* LaunchScreen.storyboard */; };
 		5D931CFD1E83F110005051E9 /* TimeLine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D931CFC1E83F110005051E9 /* TimeLine.storyboard */; };
-		5D931D011E83F5D1005051E9 /* MainTimeLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D001E83F5D1005051E9 /* MainTimeLine.swift */; };
+		5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */; };
 		5D931D031E83F67C005051E9 /* PostReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D021E83F67C005051E9 /* PostReview.swift */; };
-		5D931D051E83F773005051E9 /* AuthorPostList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D041E83F773005051E9 /* AuthorPostList.swift */; };
-		5D931D071E83F7BA005051E9 /* NewPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D061E83F7BA005051E9 /* NewPostController.swift */; };
+		5D931D051E83F773005051E9 /* AllMyPostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D041E83F773005051E9 /* AllMyPostsVC.swift */; };
+		5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D931D061E83F7BA005051E9 /* NewPostVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		014B21DAB08AD61B8BA5AD30 /* Pods-PracticaBoot4.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PracticaBoot4.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4.debug.xcconfig"; sourceTree = "<group>"; };
+		3AC967126678D88F1C224AB9 /* Pods-PracticaBoot4.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PracticaBoot4.release.xcconfig"; path = "Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4.release.xcconfig"; sourceTree = "<group>"; };
+		46211AAB1E98C64600C335D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46211AB11E98CDD000C335D6 /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		46211AB41E98CFDD00C335D6 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		46211AB61E98F0F600C335D6 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		463CCC7C1E9DE6F700EB8B76 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		46A3FE411E9BF91200BA2D92 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		46F34FA91E99D9AA00D25FA5 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsManager.swift; sourceTree = "<group>"; };
 		5D931CE21E83EEEA005051E9 /* PracticaBoot4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PracticaBoot4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D931CE51E83EEEA005051E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D931CEC1E83EEEA005051E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D931CEF1E83EEEA005051E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D931CF11E83EEEA005051E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D931CFC1E83F110005051E9 /* TimeLine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TimeLine.storyboard; sourceTree = "<group>"; };
-		5D931D001E83F5D1005051E9 /* MainTimeLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTimeLine.swift; sourceTree = "<group>"; };
+		5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPublicPostsVC.swift; sourceTree = "<group>"; };
 		5D931D021E83F67C005051E9 /* PostReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostReview.swift; sourceTree = "<group>"; };
-		5D931D041E83F773005051E9 /* AuthorPostList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorPostList.swift; sourceTree = "<group>"; };
-		5D931D061E83F7BA005051E9 /* NewPostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostController.swift; sourceTree = "<group>"; };
+		5D931D041E83F773005051E9 /* AllMyPostsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllMyPostsVC.swift; sourceTree = "<group>"; };
+		5D931D061E83F7BA005051E9 /* NewPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
+		FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PracticaBoot4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +55,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B25EC8A0AF7F19B73B952F /* Pods_PracticaBoot4.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46211AB01E98CDBE00C335D6 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				46211AB11E98CDD000C335D6 /* CloudManager.swift */,
+				46F34FAB1E99E7D800D25FA5 /* AlertsManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		46211AB31E98CFA900C335D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				46211AB41E98CFDD00C335D6 /* Post.swift */,
+				46F34FA91E99D9AA00D25FA5 /* Errors.swift */,
+				463CCC7C1E9DE6F700EB8B76 /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		5D931CD91E83EEEA005051E9 = {
 			isa = PBXGroup;
 			children = (
 				5D931CE41E83EEEA005051E9 /* PracticaBoot4 */,
 				5D931CE31E83EEEA005051E9 /* Products */,
+				DDBB673F49240CA0381C78E9 /* Pods */,
+				C52D6B06B5B59C76CCB4927C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,8 +104,11 @@
 			children = (
 				5D931CF71E83F069005051E9 /* AppDelegate */,
 				5D931CF81E83F076005051E9 /* ViewControllers */,
+				46211AB31E98CFA900C335D6 /* Models */,
 				5D931CF91E83F087005051E9 /* Storyboards */,
 				5D931CFB1E83F0A8005051E9 /* Resources */,
+				46211AB01E98CDBE00C335D6 /* Managers */,
+				46A3FE411E9BF91200BA2D92 /* Utils.swift */,
 			);
 			path = PracticaBoot4;
 			sourceTree = "<group>";
@@ -79,7 +124,6 @@
 		5D931CF81E83F076005051E9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5D931D001E83F5D1005051E9 /* MainTimeLine.swift */,
 				5D931D081E8414BB005051E9 /* All users */,
 				5D931D091E8414CA005051E9 /* Auth Users */,
 			);
@@ -99,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				5D931CEC1E83EEEA005051E9 /* Assets.xcassets */,
+				46211AAB1E98C64600C335D6 /* GoogleService-Info.plist */,
 				5D931CF11E83EEEA005051E9 /* Info.plist */,
 			);
 			name = Resources;
@@ -107,6 +152,8 @@
 		5D931D081E8414BB005051E9 /* All users */ = {
 			isa = PBXGroup;
 			children = (
+				46211AB61E98F0F600C335D6 /* MainNavigationController.swift */,
+				5D931D001E83F5D1005051E9 /* AllPublicPostsVC.swift */,
 				5D931D021E83F67C005051E9 /* PostReview.swift */,
 			);
 			name = "All users";
@@ -115,10 +162,27 @@
 		5D931D091E8414CA005051E9 /* Auth Users */ = {
 			isa = PBXGroup;
 			children = (
-				5D931D041E83F773005051E9 /* AuthorPostList.swift */,
-				5D931D061E83F7BA005051E9 /* NewPostController.swift */,
+				5D931D041E83F773005051E9 /* AllMyPostsVC.swift */,
+				5D931D061E83F7BA005051E9 /* NewPostVC.swift */,
 			);
 			name = "Auth Users";
+			sourceTree = "<group>";
+		};
+		C52D6B06B5B59C76CCB4927C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA57D34C9D1FF412B863A498 /* Pods_PracticaBoot4.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDBB673F49240CA0381C78E9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				014B21DAB08AD61B8BA5AD30 /* Pods-PracticaBoot4.debug.xcconfig */,
+				3AC967126678D88F1C224AB9 /* Pods-PracticaBoot4.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,9 +192,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D931CF41E83EEEA005051E9 /* Build configuration list for PBXNativeTarget "PracticaBoot4" */;
 			buildPhases = (
+				6B8DD2BBBAD55FE5E6FDFC48 /* [CP] Check Pods Manifest.lock */,
 				5D931CDE1E83EEEA005051E9 /* Sources */,
 				5D931CDF1E83EEEA005051E9 /* Frameworks */,
 				5D931CE01E83EEEA005051E9 /* Resources */,
+				386DCBDD54B5FF195C128B0E /* [CP] Embed Pods Frameworks */,
+				A41DB32A62A4298E96CA0B3E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -153,7 +220,7 @@
 				TargetAttributes = {
 					5D931CE11E83EEEA005051E9 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 8Z8X9YVPSZ;
+						DevelopmentTeam = 57S8287KNH;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -182,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D931CFD1E83F110005051E9 /* TimeLine.storyboard in Resources */,
+				46211AAC1E98C64600C335D6 /* GoogleService-Info.plist in Resources */,
 				5D931CF01E83EEEA005051E9 /* LaunchScreen.storyboard in Resources */,
 				5D931CED1E83EEEA005051E9 /* Assets.xcassets in Resources */,
 			);
@@ -189,16 +257,71 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		386DCBDD54B5FF195C128B0E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B8DD2BBBAD55FE5E6FDFC48 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A41DB32A62A4298E96CA0B3E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PracticaBoot4/Pods-PracticaBoot4-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5D931CDE1E83EEEA005051E9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D931D051E83F773005051E9 /* AuthorPostList.swift in Sources */,
+				5D931D051E83F773005051E9 /* AllMyPostsVC.swift in Sources */,
 				5D931CE61E83EEEA005051E9 /* AppDelegate.swift in Sources */,
+				46211AB71E98F0F600C335D6 /* MainNavigationController.swift in Sources */,
 				5D931D031E83F67C005051E9 /* PostReview.swift in Sources */,
-				5D931D071E83F7BA005051E9 /* NewPostController.swift in Sources */,
-				5D931D011E83F5D1005051E9 /* MainTimeLine.swift in Sources */,
+				46F34FAC1E99E7D800D25FA5 /* AlertsManager.swift in Sources */,
+				46211AB21E98CDD000C335D6 /* CloudManager.swift in Sources */,
+				5D931D071E83F7BA005051E9 /* NewPostVC.swift in Sources */,
+				46A3FE421E9BF91200BA2D92 /* Utils.swift in Sources */,
+				463CCC7D1E9DE6F700EB8B76 /* User.swift in Sources */,
+				46211AB51E98CFDD00C335D6 /* Post.swift in Sources */,
+				46F34FAA1E99D9AA00D25FA5 /* Errors.swift in Sources */,
+				5D931D011E83F5D1005051E9 /* AllPublicPostsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,9 +434,10 @@
 		};
 		5D931CF51E83EEEA005051E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 014B21DAB08AD61B8BA5AD30 /* Pods-PracticaBoot4.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8Z8X9YVPSZ;
+				DEVELOPMENT_TEAM = 57S8287KNH;
 				INFOPLIST_FILE = PracticaBoot4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.com.PracticaBoot4;
@@ -324,9 +448,10 @@
 		};
 		5D931CF61E83EEEA005051E9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3AC967126678D88F1C224AB9 /* Pods-PracticaBoot4.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 8Z8X9YVPSZ;
+				DEVELOPMENT_TEAM = 57S8287KNH;
 				INFOPLIST_FILE = PracticaBoot4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.com.PracticaBoot4;
@@ -354,6 +479,7 @@
 				5D931CF61E83EEEA005051E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
