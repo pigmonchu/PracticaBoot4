@@ -86,11 +86,11 @@ class AllMyPostsVC: UITableViewController {
 
         let publish = UITableViewRowAction(style: .normal, title: "Publicar") { (action, indexPath) in
             let theModel = self.model[indexPath.item]
-            if theModel.isPublic {
+            if theModel.control.isPublic {
                 return
             }
             
-            theModel.isPublic = true
+            theModel.control.isPublic = true
             theModel.publishDate = Date()
             
             self.cloudManager?.savePostInCloud(theModel)

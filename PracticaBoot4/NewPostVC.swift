@@ -22,13 +22,12 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titlePostTxt.text = model?.title
-        textPostTxt.text = model?.body
-        swIsPublic.isOn = (model?.isPublic == nil || (model?.isPublic)!)
-        
-        
+        showData()
     }
+    
 
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -55,37 +54,25 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         model?.title = titlePostTxt.text!
         model?.body = textPostTxt.text!
         model?.author = (cloudManager?.activeUser?.uid)!
-        model?.isPublic = isReadyToPublish
+        model?.control.isPublic = isReadyToPublish
         
         if imageIsChanged && imageCaptured != nil {
-            saveImage(imageCaptured, inPost: model!)
+            if model?.attachment == nil {
+                let uniqId = UUID().uuidString
+                model?.attachment = "images/\(uniqId).jpg"
+            }
+            cloudManager?.saveImage(imageCaptured, withPath: (model?.attachment!)!, completion: {
+                self.cloudManager?.savePostInCloud(self.model!)
+                self.model?.control.objectDownloaded = nil // si no no refresca la imagen aunque la ha modificado en el servidor
+            }, error: { loadError in
+                self.present(pushAlertMessages(["Error: \(loadError.localizedDescription)"], action: nil), animated: true, completion: nil)
+            })
         } else {
             cloudManager?.savePostInCloud(model!)
         }
         
         navigationController?.popViewController(animated: true)
 
-    }
-    
-    func saveImage(_ image: UIImage, inPost post: Post) {
-        let uniqueId = UUID().uuidString
-        let imageRef = cloudManager?.storageRef.child("images/\(uniqueId).jpg")
-        
-        let _ = imageRef?.put(UIImageJPEGRepresentation(image, 0.8)!, metadata: nil) { metadata, error in
-            if (error != nil) {
-                self.present(pushAlertMessages(["Error: \(error!.localizedDescription)"], action: nil), animated: true, completion: nil)
-            } else {
-                // Metadata contains file metadata such as size, content-type, and download URL.
-                let imageURL = metadata?.downloadURL()
-                var urlString: String?
-                
-                if imageURL != nil {
-                    urlString = (imageURL?.absoluteString)!
-                    post.attachment = urlString
-                    self.cloudManager?.savePostInCloud(post)
-                }
-            }
-        }
     }
     
     // MARK: - Save Post
@@ -149,7 +136,44 @@ class NewPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         self.present(picker, animated: true, completion: nil)
     }
+
+    // MARK: - Utilidades
+    func showData() {
+        
+        titlePostTxt.text = model?.title
+        textPostTxt.text = model?.body
+        swIsPublic.isOn = (model?.control.isPublic)!
+        
+        showImage()
+    }
+    
+    func showImage() {
+        guard let theModel = model,
+            let imgName = theModel.attachment else {
+                return
+        }
+        
+        if theModel.control.objectDownloaded == nil {
+            cloudManager?.loadImage(imgName,
+                                    completion: { data in
+                                        assert(Thread.current == Thread.main)
+                                        theModel.control.objectDownloaded = data
+                                        self.imagePost.image = UIImage(data: data)
+            },
+                                    error: { downloadError in
+                                        assert(Thread.current == Thread.main)
+                                        self.present(pushAlertMessages(["Error: \(downloadError.localizedDescription)"], action: nil), animated: true, completion: nil)
+                                        
+            })
+            
+        } else {
+            self.imagePost.image = UIImage(data: theModel.control.objectDownloaded!)
+        }
+    }
+
 }
+
+
 
 // MARK: - Delegado del imagepicker
 extension NewPostVC {
@@ -158,9 +182,6 @@ extension NewPostVC {
         self.dismiss(animated: false, completion: {
         })
     }
-    
-    
-    
 }
 
 

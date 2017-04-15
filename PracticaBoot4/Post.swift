@@ -3,6 +3,13 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
+class EngagementPost {
+    var idInCloud: FIRDatabaseReference? = nil
+    var objectDownloaded: Data? = nil
+    var withErrors:Bool = false
+    var isPublic = false
+}
+
 class Post:NSObject {
     
     typealias userRating = [String: Int]
@@ -12,17 +19,15 @@ class Post:NSObject {
         case video
     }
     
-    //MARK: - Intern constants
+    //MARK: - Engagement properties
+    let control = EngagementPost()
     
-    //MARK: - Stored properties
-    var idInCloud: FIRDatabaseReference?
-    
+    //MARK: - Bussines properties (public)
     var id: String
     var title: String
     var body: String
     var attachment: String?
     var author: String
-    var isPublic: Bool
     var lat: Double?
     var lng: Double?
     var publishDate: Date?
@@ -30,7 +35,6 @@ class Post:NSObject {
     var modDate: Date
     var scoring: userRating
     
-    var withErrors:Bool
     
     //MARK: - Initialization
     init(title          : String,
@@ -47,26 +51,19 @@ class Post:NSObject {
         self.author = author
         self.lat = lat
         self.lng = lng
-        if isPublic == nil {
-            self.isPublic = false
-        } else {
-            self.isPublic = isPublic!
-        }
         
         self.publishDate = nil
         
         self.attachment = attachment
     
         let now = Date()
-        if self.isPublic {
+        if self.control.isPublic {
             self.publishDate = now
         } else {
             self.publishDate = nil
         }
         self.createDate = now
         self.modDate = now
-        self.idInCloud = nil
-        self.withErrors = false
         self.scoring = [:]
         self.id = ""
 
@@ -81,28 +78,28 @@ class Post:NSObject {
         
         let dict = snap?.value as! CloudManager.Document
         self.init(dict: dict)
-        self.idInCloud = snap?.ref
+        self.control.isPublic = (self.publishDate != nil)
+        self.control.idInCloud = snap?.ref
         
     }
     
     convenience init(dict jsonObject: CloudManager.Document) {
         self.init()
         
-        withErrors = withErrors || !validateMandatory(jsonObject["id"], result: &id)
-        withErrors = withErrors || !validateMandatory(jsonObject["title"], result: &title)
-        withErrors = withErrors || !validateMandatory(jsonObject["body"], result: &body)
-        withErrors = withErrors || !validateMandatory(jsonObject["author"], result: &author)
-        withErrors = withErrors || !validateType(jsonObject["lat"], result: &lat)
-        withErrors = withErrors || !validateType(jsonObject["lng"], result: &lng)
-        withErrors = withErrors || !validateType(jsonObject["isPublic"], result: &isPublic)
-        withErrors = withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
+        control.withErrors = control.withErrors || !validateMandatory(jsonObject["id"], result: &id)
+        control.withErrors = control.withErrors || !validateMandatory(jsonObject["title"], result: &title)
+        control.withErrors = control.withErrors || !validateMandatory(jsonObject["body"], result: &body)
+        control.withErrors = control.withErrors || !validateMandatory(jsonObject["author"], result: &author)
+        control.withErrors = control.withErrors || !validateType(jsonObject["lat"], result: &lat)
+        control.withErrors = control.withErrors || !validateType(jsonObject["lng"], result: &lng)
+        control.withErrors = control.withErrors || !validateType(getDate(from: jsonObject["publishDate"]), result: &publishDate)
         
-        withErrors = withErrors || !validateType(jsonObject["attachment"] , result: &attachment)
+        control.withErrors = control.withErrors || !validateType(jsonObject["attachment"] , result: &attachment)
         
-        withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["createDate"]), result: &createDate)
-        withErrors = withErrors || !validateMandatory(getDate(from: jsonObject["modDate"]), result: &modDate)
+        control.withErrors = control.withErrors || !validateMandatory(getDate(from: jsonObject["createDate"]), result: &createDate)
+        control.withErrors = control.withErrors || !validateMandatory(getDate(from: jsonObject["modDate"]), result: &modDate)
         
-        withErrors = withErrors || !validateType(getScoring(from: jsonObject["scoring"]), result: &scoring)
+        control.withErrors = control.withErrors || !validateType(getScoring(from: jsonObject["scoring"]), result: &scoring)
         
         
     }
@@ -186,23 +183,17 @@ class Post:NSObject {
         for (_, attr) in mirrored_object.children.enumerated() {
             if let property_name = attr.label as String! {
                 
-                if property_name != "idInCloud" &&
-                   property_name != "withErrors" &&
+                if property_name != "control" &&
                    property_name != "scoring" {
                     dict["\(property_name)"] = format(value: attr.value)
                 }
-                
-                if property_name == "scoring" {
-                    let a = 1 
-                }
-                
             }
         }
         return dict
     }
     
     func isRemoteReferenced() -> Bool {
-        return self.idInCloud != nil
+        return self.control.idInCloud != nil
     }
     
     var rating: Int {
@@ -221,6 +212,8 @@ class Post:NSObject {
         }
     }
 
+    //MARK: - Private
+    
     private func format(value: Any?) -> Any? {
         var retValue: Any?
         

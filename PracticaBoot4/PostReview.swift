@@ -80,7 +80,33 @@ class PostReview: UIViewController {
 
         myRatingTxt.text = "\(rateSlider.value)"
         ratingTxt.text = "\(averageRating ) de 5"
+
+        showImage()
         
+    }
+    
+    func showImage() {
+        guard let theModel = model,
+                  let imgName = theModel.attachment else {
+            return
+        }
+        
+        if theModel.control.objectDownloaded == nil {
+            cloudManager?.loadImage(imgName,
+                                    completion: { data in
+                                        assert(Thread.current == Thread.main)
+                                        theModel.control.objectDownloaded = data
+                                        self.imagePost.image = UIImage(data: theModel.control.objectDownloaded!)
+            },
+                                    error: { downloadError in
+                                        assert(Thread.current == Thread.main)
+                                        self.present(pushAlertMessages(["Error: \(downloadError.localizedDescription)"], action: nil), animated: true, completion: nil)
+                                        
+            })
+        
+        } else {
+            self.imagePost.image = UIImage(data: theModel.control.objectDownloaded!)
+        }
     }
     
     func checkScoringControlAndData() {

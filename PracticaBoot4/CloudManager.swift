@@ -23,6 +23,7 @@ class CloudManager {
     typealias Document = [String : Any]
     typealias action = () -> ()
     typealias errorProcess = (_:Error) -> ()
+    typealias dataProcess = (_:Data) -> ()
     
     let databaseRef : FIRDatabaseReference
     let PostRef: FIRDatabaseReference
@@ -30,6 +31,11 @@ class CloudManager {
     var activeUser: User?
     var observerUserStatus: FIRAuthStateDidChangeListenerHandle?
     let storageRef: FIRStorageReference
+    
+    let pathImages = "images/"
+    let extImages = ".jpg"
+    let maxImageSize:Int64 = 4 * 1024 * 1024
+//    let pathVideos = "videos/"
     
     
     //MARK: - Initialization
@@ -83,10 +89,10 @@ class CloudManager {
     
     func savePostInCloud(_ document: Post) {
         
-        if document.idInCloud == nil {
+        if document.control.idInCloud == nil {
             createInCloud(inEntity: PostRef, document: document.toDictionary())
         } else {
-            updateInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+            updateInCloud(inEntity: document.control.idInCloud!, document: document.toDictionary())
         }
         
     }
@@ -95,12 +101,12 @@ class CloudManager {
         if !remoteReferenceOK(document) {
             return
         }
-        let ratingReference = document.idInCloud!.child("scoring")
+        let ratingReference = document.control.idInCloud!.child("scoring")
         var ratingDocument = Document()
         ratingDocument["\(user)"] = rating
         
         updateInCloud(inEntity: ratingReference, document: ratingDocument)
-        updateInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+        updateInCloud(inEntity: document.control.idInCloud!, document: document.toDictionary())
     }
     
     func deletePostInCloud(_ document: Post) {
@@ -108,7 +114,7 @@ class CloudManager {
             return
         }
         
-        deleteInCloud(inEntity: document.idInCloud!, document: document.toDictionary())
+        deleteInCloud(inEntity: document.control.idInCloud!, document: document.toDictionary())
     }
     
     private func remoteReferenceOK(_ post: Post) -> Bool {
@@ -118,6 +124,53 @@ class CloudManager {
         }
         return true
     }
+    
+    //MARK: - Storage
+    
+    func saveImage(_ image: UIImage, withName nameImg: String, completion: action?, error: errorProcess? ) {
+        let path = self.pathImages+nameImg+self.extImages
+        self.saveImage(image, withName: path, completion: completion, error: error)
+    }
+    
+    func saveImage(_ image: UIImage, withPath path: String, completion: action?, error: errorProcess?) {
+        let imageRef = self.storageRef.child(path)
+        
+        let _ = imageRef.put(UIImageJPEGRepresentation(image, 0.8)!, metadata: nil) { metadata, loadError in
+            if (loadError != nil) {
+                guard let defError = error else {
+                    return
+                }
+                defError(loadError!)
+            } else {
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                guard let defCompletion = completion else {
+                    return
+                }
+                defCompletion()
+            }
+        }
+        
+    }
+    
+    func loadImage(_ imgName: String, completion: CloudManager.dataProcess?, error: CloudManager.errorProcess?) {
+        let imgRef = self.storageRef.child(imgName)
+        imgRef.data(withMaxSize: self.maxImageSize, completion: { (data, downloadError) in
+            if downloadError == nil {
+                guard let defCompletion = completion,
+                    let defData = data
+                    else {
+                        return
+                }
+                defCompletion(defData)
+            } else {
+                guard let defError = error else {
+                    return
+                }
+                defError(downloadError!)
+            }
+        })
+    }
+
     
     //MARK: - REST POST
     fileprivate func deleteInCloud(inEntity: FIRDatabaseReference, document: Document) {
@@ -145,11 +198,6 @@ class CloudManager {
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (loggedUser, loginError) in
             if let defError = loginError {
-                let errorCode = FIRAuthErrorCode(rawValue: defError._code)
-                
-                //                if errorCode == FIRAuthErrorCodeUserNotFound {
-                //                    self.singUp(withEmail: email, password: password, observer: observer, error: error)
-                //                }
                 print("Login: error \(defError) \(defError.localizedDescription)")
                 self.activeUser = nil
                 if error != nil {

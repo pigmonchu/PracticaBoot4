@@ -64,7 +64,7 @@ class AllPublicPostsVC: UITableViewController {
 
     func validateInput() -> Bool {
         for post in model {
-            if post.withErrors {
+            if post.control.withErrors {
                 return false
             }
         }
